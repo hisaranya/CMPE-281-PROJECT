@@ -12,8 +12,6 @@ import java.util.Date;
 public class ScrumDAOImpl implements DAO {
     @Override
     public Task getTask() {
-        return new TaskScrum("Inprogress", "task1", "Dummy Task", 50, 10
-
-        );
+        return new TaskScrum("Inprogress", "task1", "Dummy Task", 50, 10);
     }
 }

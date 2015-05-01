@@ -7,13 +7,15 @@ public class Resource {
 
     protected String id;
 
-    protected String userName;
+    protected String username;
     protected String password;
 
-    public Resource(String userName, String password) {
-        this.userName = userName;
+    public Resource(String username, String password) {
+        this.username = username;
         this.password = password;
     }
+
+    public Resource() {}
 
     public String getId() {
         return id;
@@ -23,12 +25,12 @@ public class Resource {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

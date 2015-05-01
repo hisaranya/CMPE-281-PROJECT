@@ -1,5 +1,7 @@
 package edu.sjsu.projectcloud.project;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -9,17 +11,19 @@ public class Project {
 
     protected String id;
 
-    protected String projectName;
-    protected String projectType;
-    protected Date startDate;
-    protected Date endDate;
+    protected String projectname;
+    protected String projecttype;
+    protected String startdate;
+    protected String enddate;
 
-    public Project(String projectName, String projectType, Date startDate, Date endDate) {
-        this.projectName = projectName;
-        this.projectType = projectType;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Project(String projectname, String projecttype, String startdate, String enddate) {
+        this.projectname = projectname;
+        this.projecttype = projecttype;
+        this.startdate = startdate;
+        this.enddate = enddate;
     }
+
+    public Project() {}
 
     public String getId() {
         return id;
@@ -29,35 +33,36 @@ public class Project {
         this.id = id;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getProjectname() {
+        return projectname;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
     }
 
-    public String getProjectType() {
-        return projectType;
+    public String getProjecttype() {
+        return projecttype;
     }
 
-    public void setProjectType(String projectType) {
-        this.projectType = projectType;
+    public void setProjecttype(String projecttype) {
+        this.projecttype = projecttype;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getStartdate() {
+        return startdate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getEnddate() {
+        return enddate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
+
 }
