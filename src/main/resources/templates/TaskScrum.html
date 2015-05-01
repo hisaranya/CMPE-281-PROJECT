@@ -114,7 +114,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="box-body">
+                    <div class="box-body" th:object="${task}">
                         <h3>Create Story</h3>
 
 
@@ -130,7 +130,7 @@
 
 
                         <div class="form-group">
-                            <input type="text" id="totalhours" name="totalhours" th:field="*{hoursAlloted}" class="form-control" placeholder="totalhours in number"/>
+                            <input type="text" id="totalhours" name="totalhours" th:field="*{hoursAllotted}" class="form-control" placeholder="totalhours in number"/>
                         </div>
 
 
