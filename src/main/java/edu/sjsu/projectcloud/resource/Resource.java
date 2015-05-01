@@ -40,4 +40,10 @@ public class Resource {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        String string = "id: "+this.getId()+", username: "+this.getUsername()+", password: "+this.getPassword();
+        return string;
+    }
 }

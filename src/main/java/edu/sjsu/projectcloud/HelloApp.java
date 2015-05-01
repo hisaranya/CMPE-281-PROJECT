@@ -2,6 +2,8 @@ package edu.sjsu.projectcloud;
 
 import edu.sjsu.projectcloud.dataAccess.DAO;
 import edu.sjsu.projectcloud.dataAccess.DAOFactory;
+import edu.sjsu.projectcloud.db.ProjectAccess;
+import edu.sjsu.projectcloud.db.ResourceAccess;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.task.Task;
@@ -22,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @EnableAutoConfiguration
 @Controller
 @RequestMapping("/cmpe281project")
 public class HelloApp {
+
 
     public static void main(String... args) {
         SpringApplication.run(HelloApp.class);
@@ -46,23 +50,36 @@ public class HelloApp {
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public String createResource(@ModelAttribute Resource resource, Model model) {
+        ResourceAccess resourceAccess = new ResourceAccess();
+        resourceAccess.insertResource(resource);
         String username = resource.getUsername();
-        System.out.println(username);
         Project project = new Project();
         model.addAttribute("project", project);
-        model.addAttribute("username", "m");
+        model.addAttribute("username", resource.getUsername());
         return "preferences";
+    }
+
+    private void getAllResources(ResourceAccess resourceAccess) {
+        List<Resource> resources = resourceAccess.getAllResources();
+        for (Resource r : resources) {
+            System.out.println(r.toString());
+        }
     }
 
     @RequestMapping(value = "/projects", method = RequestMethod.POST)
     public String createProject(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
         String type = project.getProjecttype();
-        String name = project.getProjectname();
-        System.out.println(type + " " + name + " ");
+        ProjectAccess projectAccess = new ProjectAccess();
+        projectAccess.insertProject(project);
+        Resource resource = new Resource("s", "s");
+        projectAccess.updateProjectAddResource(resource, project.getProjectname());
+
+        Task task = new Task("planned", "task1", "dummy task");
+        projectAccess.updateProjectAddTask(task, project.getProjectname());
+
         DAO dao = this.getDAO(type);
-        Task task = dao.getTask();
-        model.addAttribute("task", task);
-        //model.addAttribute(username);
+        Task task1 = dao.getTask();
+        model.addAttribute("task", task1);
         return task.getClass().getSimpleName();
     }
 
@@ -70,15 +87,7 @@ public class HelloApp {
         return DAOFactory.getInstance(type);
     }
 
-    @InitBinder
-    private void dateBinder(WebDataBinder binder) {
-        //The date format to parse or output your dates
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        //Create a new CustomDateEditor
-        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
-        //Register it as custom editor for the Date type
-        binder.registerCustomEditor(Date.class, editor);
-    }
+
 
 }
 

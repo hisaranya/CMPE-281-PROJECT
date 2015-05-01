@@ -1,10 +1,12 @@
 package edu.sjsu.projectcloud.task;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Created by mallika on 4/30/15.
  */
 public class Task {
-
+    @Id
     protected String id;
 
     protected String status;
