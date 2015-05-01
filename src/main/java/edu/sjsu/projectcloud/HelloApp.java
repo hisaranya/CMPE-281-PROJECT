@@ -16,10 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -30,7 +27,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/cmpe281project")
 public class HelloApp {
-
+    AppHandler appHandler = new AppHandler();
 
     public static void main(String... args) {
         SpringApplication.run(HelloApp.class);
@@ -48,14 +45,38 @@ public class HelloApp {
         return "register";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/register/users", method = RequestMethod.POST)
     public String createResource(@ModelAttribute Resource resource, Model model) {
-        ResourceAccess resourceAccess = new ResourceAccess();
-        resourceAccess.insertResource(resource);
+        if (appHandler.doesUserExist(resource.getUsername()) != null) {
+            return "userexists";
+        }
+        appHandler.insertResource(resource);
         String username = resource.getUsername();
         Project project = new Project();
         model.addAttribute("project", project);
         model.addAttribute("username", resource.getUsername());
+        return "preferences";
+    }
+/*
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String getUserlogin(Model model) {
+        Resource resource = new Resource();
+        model.addAttribute("resource", resource);
+        model.addAttribute("message", "Please login");
+        return "login";
+    }
+    */
+    @RequestMapping(value = "/index/users", method = RequestMethod.POST)
+    public String getResource(@RequestParam String username, @RequestParam String password, Model model) {
+        if (appHandler.doesUserExist(username) == null) {
+            return "nosuchuser";
+        }
+        if (!appHandler.validateUsernamePassword(username, password)) {
+            return "login";
+        }
+        Project project = new Project();
+        model.addAttribute("project", project);
+        model.addAttribute("username", username);
         return "preferences";
     }
 
@@ -71,16 +92,10 @@ public class HelloApp {
         String type = project.getProjecttype();
         ProjectAccess projectAccess = new ProjectAccess();
         projectAccess.insertProject(project);
-        Resource resource = new Resource("s", "s");
-        projectAccess.updateProjectAddResource(resource, project.getProjectname());
-
-        Task task = new Task("planned", "task1", "dummy task");
-        projectAccess.updateProjectAddTask(task, project.getProjectname());
-
         DAO dao = this.getDAO(type);
         Task task1 = dao.getTask();
         model.addAttribute("task", task1);
-        return task.getClass().getSimpleName();
+        return task1.getClass().getSimpleName();
     }
 
     private DAO getDAO(String type) {

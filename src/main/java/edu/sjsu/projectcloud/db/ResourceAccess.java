@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.core.query.*;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 import javax.management.Query;
 import java.net.UnknownHostException;
@@ -34,6 +36,16 @@ public class ResourceAccess {
         }
         return false;
     }
+
+    public Resource findResource(String userName) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Resource resource = mongoOperations.findOne(query(where("username").is(userName)), Resource.class);
+        return resource;
+    }
+
 
     public List<Resource> getAllResources() {
         MongoOperations mongoOperations = getMongoOperationInstance();

@@ -18,42 +18,28 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 /**
  * Created by mallika on 5/1/15.
  */
-public class ProjectAccess {
+public class SprintAccess {
 
     private MongoOperations getMongoOperations() throws UnknownHostException {
         MongoOperations mongoOperations = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "test"));
         return mongoOperations;
     }
 
-    public boolean insertProject(Project project) {
+    public boolean insertSprint(Sprint sprint) {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations != null) {
-            mongoOperations.insert(project);
+            mongoOperations.insert(sprint);
             return true;
         }
         return false;
     }
 
-    public boolean updateProjectAddResource(Resource resource, String projectName) {
+    public boolean updateSprintAddResource(Resource resource, String projectName, String sprintName) {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations != null) {
-            Project project = mongoOperations.findOne(query(where("projectname").is(projectName)), Project.class);
+            Project project = mongoOperations.findOne(query(where("projectname").is(projectName).and("sprintName").is(sprintName)), Project.class);
             if (project != null) {
                 project.addResource(resource);
-                String projectId = project.getId();
-                mongoOperations.upsert(query(where("projectname").is(projectName)), Update.update(projectId, project), Project.class);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateProjectAddSprint(Sprint sprint, String projectName) {
-        MongoOperations mongoOperations = getMongoOperationInstance();
-        if (mongoOperations != null) {
-            Project project = mongoOperations.findOne(query(where("projectname").is(projectName)), Project.class);
-            if (project != null) {
-
                 String projectId = project.getId();
                 mongoOperations.upsert(query(where("projectname").is(projectName)), Update.update(projectId, project), Project.class);
             }

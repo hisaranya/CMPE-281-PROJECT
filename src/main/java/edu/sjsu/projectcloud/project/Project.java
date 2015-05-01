@@ -22,9 +22,6 @@ public class Project {
     List<Resource> resources = new ArrayList<>();
     List<Task> tasks = new ArrayList<>();
 
-
-
-
     public Project(String projectname, String projecttype, String startdate, String enddate) {
         this.projectname = projectname;
         this.projecttype = projecttype;

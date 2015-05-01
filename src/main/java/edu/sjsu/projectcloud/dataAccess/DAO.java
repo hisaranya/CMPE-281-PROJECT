@@ -1,5 +1,7 @@
 package edu.sjsu.projectcloud.dataAccess;
 
+import edu.sjsu.projectcloud.project.Project;
+import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
 
 /**
