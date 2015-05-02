@@ -90,7 +90,12 @@ public class HelloApp {
         DAO dao = this.getDAO(project.getProjecttype());
         Task task1 = dao.getTask();
         model.addAttribute("task", task1);
-        return task1.getClass().getSimpleName();
+
+        if (project.getProjecttype().equals("SCRUM")) {
+            return "createSprint";
+        } else {
+            return task1.getClass().getSimpleName();
+        }
     }
 
     private DAO getDAO(String type) {
