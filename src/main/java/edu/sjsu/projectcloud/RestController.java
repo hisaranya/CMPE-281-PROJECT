@@ -4,6 +4,9 @@ import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.TaskScrum;
+import edu.sjsu.projectcloud.session.UserSessionInfo;
+import edu.sjsu.projectcloud.sprint.Sprint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,11 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/cmpe281project/api")
 public class RestController {
+    @Autowired
+    UserSessionInfo userSessionInfo;
+
+
+
     @RequestMapping(value = "/getAllSprintsForProject", method = RequestMethod.GET)
     public List<Sprint> getAllSprintsForProject(@RequestParam(value = "projectId", required = true) String projectId) {
         // get sprints and return the list of sprints here
