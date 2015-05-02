@@ -19,15 +19,17 @@ public class Project {
     protected String projecttype;
     protected String startdate;
     protected String enddate;
-    List<Resource> resources = new ArrayList<>();
-    List<Task> tasks = new ArrayList<>();
+    protected String ownername;
 
-    public Project(String projectname, String projecttype, String startdate, String enddate) {
+    protected List<Resource> resources = new ArrayList<>();
+    protected List<Task> tasks = new ArrayList<>();
+
+    public Project(String projectname, String projecttype, String startdate, String enddate, String ownername) {
         this.projectname = projectname;
         this.projecttype = projecttype;
         this.startdate = startdate;
         this.enddate = enddate;
-
+        this.ownername = ownername;
     }
 
     public Project() {}
@@ -72,11 +74,11 @@ public class Project {
         this.enddate = enddate;
     }
 
-    public List<Resource> getResource() {
+    public List<Resource> getResources() {
         return resources;
     }
 
-    public void setResource(List<Resource> resources) {
+    public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
 
@@ -96,7 +98,13 @@ public class Project {
     public List<Task> getTasks() {
         return tasks;
     }
+    public String getOwnername() {
+        return ownername;
+    }
 
+    public void setOwnername(String ownername) {
+        this.ownername = ownername;
+    }
 
     public void addTask(Task task) {
         if (tasks != null) {

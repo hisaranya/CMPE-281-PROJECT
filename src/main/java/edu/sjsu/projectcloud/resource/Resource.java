@@ -15,6 +15,7 @@ public class Resource {
     protected String username;
     protected String password;
     List<Project> projects = new ArrayList<>();
+
     public Resource(String username, String password) {
         this.username = username;
         this.password = password;
@@ -46,20 +47,21 @@ public class Resource {
         this.password = password;
     }
 
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public void addProject(Project project) {
+        projects.add(project);
+    }
+
     @Override
     public String toString() {
         String string = "id: "+this.getId()+", username: "+this.getUsername()+", password: "+this.getPassword();
         return string;
     }
-/*
-    public void findProject(Resource resource){
-        if(projects != null){
-            projects.add(projects);
-        }
-        else
-        {
-            System.out.println("There are no projects for the user.");
-        }
-    }
-    */
 }

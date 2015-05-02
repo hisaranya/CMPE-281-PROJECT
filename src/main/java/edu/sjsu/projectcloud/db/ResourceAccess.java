@@ -66,4 +66,31 @@ public class ResourceAccess {
         }
         return mongoOperations;
     }
+
+    public Project findProjectinResource(String username, String projectName, String projectType) throws  NullMongoTemplateException{
+        Project project = null;
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Resource resource = mongoOperations.findOne(query(where("username").is(username)), Resource.class);
+        if(resource != null){
+            List<Project> projects = resource.getProjects();
+            for (Project project1 : projects) {
+                if (project1.getProjecttype().equals(projectType) && project1.getProjectname().equals(projectName)) {
+                    project = project1;
+                    break;
+                }
+            }
+        }
+        return project;
+    }
+
+    public void updateResourceAddProject(String username, Project project) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        mongoOperations.updateFirst(query(where("username").is(username)), new Update().push("projects", project), Resource.class);
+    }
 }

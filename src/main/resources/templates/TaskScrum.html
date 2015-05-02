@@ -4,20 +4,25 @@
 
     <title>Cmpe281 Project</title>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
     <!-- Ionicons -->
-    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
     <!-- Morris chart -->
     <link href="../../css/morris/morris.css" rel="stylesheet" type="text/css" th:href="@{/css/morris/morris.css}"/>
     <!-- jvectormap -->
-    <link href="../../css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" th:href="@{/css/jvectormap/jquery-jvectormap-1.2.2.css}"/>
+    <link href="../../css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/jvectormap/jquery-jvectormap-1.2.2.css}"/>
     <!-- Date Picker -->
-    <link href="../../css/d atepicker/datepicker3.css" rel="stylesheet" type="text/css" th:href="@{/css/datepicker/datepicker3.css}"/>
+    <link href="../../css/d atepicker/datepicker3.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/datepicker/datepicker3.css}"/>
     <!-- Daterange picker -->
-    <link href="../../css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker/daterangepicker-bs3.css}"/>
+    <link href="../../css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/daterangepicker/daterangepicker-bs3.css}"/>
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="../../css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"  th:href="@{/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}" />
+    <link rel="stylesheet" href="../../css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+          th:href="@{/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
     <!-- Theme style -->
     <link rel="stylesheet" href="../../css/AdminLTE.css" th:href="@{/css/AdminLTE.css}"/>
 
@@ -83,7 +88,7 @@
             <div class="user-panel">
 
                 <div class="pull-left info">
-                    <p th:text="'Hello, ' + ${username}" />
+                    <p th:text="'Hello, ' + ${username}"/>
 
 
                 </div>
@@ -93,11 +98,10 @@
             <ul class="sidebar-menu">
 
                 <li>
-                    <a href="#" onclick ="setaddstorystate()">
+                    <a href="#" onclick="setaddstorystate()">
                         <i class="fa fa-th"></i> <span><td>Clear</td></span>
                     </a>
                 </li>
-
 
 
             </ul>
@@ -119,26 +123,26 @@
 
 
                         <div class="form-group">
-                            <input type="text" id="story" name="story" th:field="*{taskName}" class="form-control" placeholder="Story name"/>
+                            <input type="text" id="story" name="story" th:field="*{taskName}" class="form-control"
+                                   placeholder="Story name"/>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" id="startdate" name="startdate" th:field="*{taskDescription}" class="form-control" placeholder="startdate mm-dd-yyyy"/>
-                        </div>
-
-
-
-
-                        <div class="form-group">
-                            <input type="text" id="totalhours" name="totalhours" th:field="*{hoursAllotted}" class="form-control" placeholder="totalhours in number"/>
+                            <input type="text" id="startdate" name="startdate" th:field="*{taskDescription}"
+                                   class="form-control" placeholder="startdate mm-dd-yyyy"/>
                         </div>
 
 
                         <div class="form-group">
-                            <input type="text" id="hourscompleted" name="hourscompleted" th:field="*{hoursCompleted}" class="form-control" placeholder="hourscompleted  in number"/>
+                            <input type="text" id="totalhours" name="totalhours" th:field="*{hoursAllotted}"
+                                   class="form-control" placeholder="totalhours in number"/>
                         </div>
 
 
+                        <div class="form-group">
+                            <input type="text" id="hourscompleted" name="hourscompleted" th:field="*{hoursCompleted}"
+                                   class="form-control" placeholder="hourscompleted  in number"/>
+                        </div>
 
 
                     </div>
@@ -148,17 +152,17 @@
                 <div class="col-md-6">
                     <div class="box-body">
 
-                        <div id="add_button" class="form-group" >
-                            <button  class="btn btn-success btn-sm"  onclick="addstoryajax()">Add Story</button>
+                        <div id="add_button" class="form-group">
+                            <button class="btn btn-success btn-sm" onclick="addstoryajax()">Add Story</button>
 
                         </div>
-                        <div id ="edit_button" class="form-group" >
-                            <button  class="btn btn-success btn-sm" onclick ="editstoryajax()">Save Changes</button>
+                        <div id="edit_button" class="form-group">
+                            <button class="btn btn-success btn-sm" onclick="editstoryajax()">Save Changes</button>
 
                         </div>
 
                     </div>
-                    <div id= "error_box" class="box-body">
+                    <div id="error_box" class="box-body">
 
                     </div>
 
@@ -168,9 +172,10 @@
             </div>
 
             <!-- Small boxes (Stat box) -->
-            <div id = "notes_main_div">
+            <div id="notes_main_div">
 
-            </div><!-- /.row -->
+            </div>
+            <!-- /.row -->
 
             <!-- Main row -->
             <div class="row">
@@ -180,12 +185,17 @@
                 <section class="col-lg-5 connectedSortable">
 
 
-                </section><!-- right col -->
-            </div><!-- /.row (main row) -->
+                </section>
+                <!-- right col -->
+            </div>
+            <!-- /.row (main row) -->
 
-        </section><!-- /.content -->
-    </aside><!-- /.right-side -->
-</div><!-- ./wrapper -->
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
 
 
 <!-- add new calendar event modal -->
@@ -225,22 +235,22 @@
 
 
     var count = 0;
-    window.onload = function() {
+    window.onload = function () {
         $("#edit_button").hide();
 
 
         $.ajax({
             url: "./" + "/allstories",
             type: "GET",
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             },
-            success: function(responsentity) {
+            success: function (responsentity) {
                 loopstories(responsentity);
 
             },
-            error: function(errorThrown) {
+            error: function (errorThrown) {
 
                 displayerror(errorThrown.responseText);
 
@@ -254,21 +264,19 @@
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/cmpe281project/test",
-            success: function() {
+            success: function () {
                 console.log("testing");
             },
-            error : function() {
+            error: function () {
             }
         });
     }
 
 
-
     function addstoryajax() {
 
         var file_name = $('#story').val();
-        if(file_name=="")
-        {
+        if (file_name == "") {
             count++;
             file_name = "Story " + count;
         }
@@ -279,27 +287,32 @@
         var file_data3 = $('#hourscompleted').val();
 
 
-        var json = { "file_name" : file_name, "file_data1": file_data1, "file_data2": file_data2, "file_data3": file_data3};
+        var json = {
+            "file_name": file_name,
+            "file_data1": file_data1,
+            "file_data2": file_data2,
+            "file_data3": file_data3
+        };
         $.ajax({
             url: "./" + "/story",
             data: JSON.stringify(json),
             type: "POST",
 
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             },
-            success: function(responsentity) {
+            success: function (responsentity) {
                 $("#story").val("");
                 $("#startdate").val("");
                 $("#totalhours").val("");
                 $("#hourscompleted").val("");
 
-                addstoryhtml(responsentity.file_name.trim().replace(/\s+/g,'_'),responsentity.file_name);
+                addstoryhtml(responsentity.file_name.trim().replace(/\s+/g, '_'), responsentity.file_name);
 
 
             },
-            error: function(errorThrown) {
+            error: function (errorThrown) {
 
                 displayerror(errorThrown.responseText);
 
@@ -311,18 +324,18 @@
 
     function viewstoryajax(param) {
 
-        var x = "#"+param.parentNode.parentNode.parentNode.id;
+        var x = "#" + param.parentNode.parentNode.parentNode.id;
         var file_name = $(x).find("p:first").text();
 
         $.ajax({
             url: "./" + "/story/" + file_name,
             type: "GET",
 
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             },
-            success: function(responsentity) {
+            success: function (responsentity) {
                 $("#startdate").val(responsentity.file_data1);
                 $("#totalhours").val(responsentity.file_data2);
                 $("#hourscompleted").val(responsentity.file_data3);
@@ -336,7 +349,7 @@
 
 
             },
-            error: function(errorThrown) {
+            error: function (errorThrown) {
 
                 displayerror(errorThrown.responseText);
 
@@ -356,24 +369,29 @@
         var file_data3 = $('#hourscompleted').val();
 
 
-        var json = { "file_name" : file_name, "file_data1": file_data1, "file_data2": file_data2, "file_data3": file_data3};
+        var json = {
+            "file_name": file_name,
+            "file_data1": file_data1,
+            "file_data2": file_data2,
+            "file_data3": file_data3
+        };
         $.ajax({
-            url: "./" + "/story/"+ file_name,
+            url: "./" + "/story/" + file_name,
             data: JSON.stringify(json),
             type: "PUT",
 
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             },
-            success: function(responsentity) {
+            success: function (responsentity) {
                 setaddstorystate();
                 responsentity.file_name = "updated";
                 //editstoryhtml(responsentity.file_name.trim().replace(/\s+/g,'_'),responsentity.file_name);
                 displaysuccess("Story " + file_name + " successfully Updated!")
 
             },
-            error: function(errorThrown) {
+            error: function (errorThrown) {
 
                 displayerror(errorThrown.responseText);
 
@@ -385,24 +403,24 @@
 
     function deletestoryajax(param) {
 
-        var x = "#"+param.parentNode.parentNode.parentNode.id;
+        var x = "#" + param.parentNode.parentNode.parentNode.id;
         var file_name = $(x).find("p:first").text();
 
 
         $.ajax({
-            url: "./" + "/story/"+ file_name,
+            url: "./" + "/story/" + file_name,
             type: "DELETE",
 
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             },
-            success: function(responsentity) {
-                $("#"+param.parentNode.parentNode.parentNode.id).remove();
+            success: function (responsentity) {
+                $("#" + param.parentNode.parentNode.parentNode.id).remove();
                 displaysuccess("Story " + file_name + " successfully Deleted!")
 
             },
-            error: function(errorThrown) {
+            error: function (errorThrown) {
 
                 displayerror(errorThrown.responseText);
 
@@ -412,8 +430,7 @@
     }
 
 
-    function setaddstorystate()
-    {
+    function setaddstorystate() {
 
 
         $("#startdate").val("");
@@ -429,38 +446,34 @@
     }
 
 
-    function displayerror(error)
-    {
+    function displayerror(error) {
 
         $("#error_box").html('<div  class="alert alert-danger alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button><span id="error_text"></span></div>');
         $("#error_text").text(error);
     }
 
 
-    function loopstories(responsentity)
-    {
+    function loopstories(responsentity) {
         /*<![CDATA[*/
         //responsentity[0].file_name+
-        for (var i = 0; i<responsentity.length; i++) {
-            if(responsentity[i].file_name!="")
-                addstoryhtml(responsentity[i].file_name.trim().replace(/\s+/g,'_'),responsentity[i].file_name);
+        for (var i = 0; i < responsentity.length; i++) {
+            if (responsentity[i].file_name != "")
+                addstoryhtml(responsentity[i].file_name.trim().replace(/\s+/g, '_'), responsentity[i].file_name);
         }
         /*]]>*/
     }
 
 
-
-    function displaysuccess(success)
-    {
+    function displaysuccess(success) {
 
         $("#error_box").html('<div  class="alert alert-success alert-dismissable"><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button><span id="error_text"></span></div>');
         $("#error_text").text(success);
     }
 
 
-    function addstoryhtml(titleID,title) {
+    function addstoryhtml(titleID, title) {
 
-        $("#notes_main_div").append('<div class="col-lg-3 col-xs-6" id = "' + titleID + '"><div class="small-box"  style="width: 175px; height: 182px"><div class="inner" style="position:absolute;top:15px;"><p>' + title +'</p></div><div style="position:absolute;left:23px;bottom:20px;">View/Edit<a class="fa fa-fw fa-edit" onclick = "viewstoryajax(this)"></a> Delete<a class="fa fa-fw fa-trash-o" onclick = "deletestoryajax(this)"></a></div></div></div>');
+        $("#notes_main_div").append('<div class="col-lg-3 col-xs-6" id = "' + titleID + '"><div class="small-box"  style="width: 175px; height: 182px"><div class="inner" style="position:absolute;top:15px;"><p>' + title + '</p></div><div style="position:absolute;left:23px;bottom:20px;">View/Edit<a class="fa fa-fw fa-edit" onclick = "viewstoryajax(this)"></a> Delete<a class="fa fa-fw fa-trash-o" onclick = "deletestoryajax(this)"></a></div></div></div>');
 
     }
 

@@ -57,15 +57,7 @@ public class HelloApp {
         model.addAttribute("username", resource.getUsername());
         return "preferences";
     }
-/*
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String getUserlogin(Model model) {
-        Resource resource = new Resource();
-        model.addAttribute("resource", resource);
-        model.addAttribute("message", "Please login");
-        return "login";
-    }
-    */
+
     @RequestMapping(value = "/index/users", method = RequestMethod.POST)
     public String getResource(@RequestParam String username, @RequestParam String password, Model model) {
         if (appHandler.doesUserExist(username) == null) {
@@ -88,11 +80,14 @@ public class HelloApp {
     }
 
     @RequestMapping(value = "/projects", method = RequestMethod.POST)
-    public String createProject(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
-        String type = project.getProjecttype();
-        ProjectAccess projectAccess = new ProjectAccess();
-        projectAccess.insertProject(project);
-        DAO dao = this.getDAO(type);
+    public String createProject(@ModelAttribute Project project, Model model) {
+        if (appHandler.doesProjectExistInResource(project.getOwnername(), project) != null) {
+            return "login";
+        }
+        System.out.println(project.getOwnername());
+        appHandler.insertProject(project);
+        appHandler.updateResourceAddProject(project.getOwnername(), project);
+        DAO dao = this.getDAO(project.getProjecttype());
         Task task1 = dao.getTask();
         model.addAttribute("task", task1);
         return task1.getClass().getSimpleName();

@@ -1,6 +1,7 @@
 package edu.sjsu.projectcloud;
 
 import edu.sjsu.projectcloud.db.NullMongoTemplateException;
+import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
@@ -10,7 +11,7 @@ import edu.sjsu.projectcloud.resource.Resource;
  */
 public class AppHandler {
     ResourceAccess resourceAccess = new ResourceAccess();
-
+    ProjectAccess projectAccess = new ProjectAccess();
 
     public Resource doesUserExist(String username) {
         Resource resource;
@@ -27,6 +28,10 @@ public class AppHandler {
         resourceAccess.insertResource(resource);
     }
 
+    public void insertProject(Project project) {
+        projectAccess.insertProject(project);
+    }
+
     public boolean validateUsernamePassword(String username, String password) {
         Resource resource = doesUserExist(username);
         if (resource.getPassword().equals(password)) {
@@ -34,16 +39,27 @@ public class AppHandler {
         }
         return false;
     }
-/*
-    public Project doesProjectExist(String username, Project project) {
+
+    public Project doesProjectExistInResource(String username, Project project) {
+        Project project1;
         try {
-            project.findProject(username);
+            project1 = resourceAccess.findProjectinResource(username, project.getProjectname(), project.getProjecttype());
         } catch (NullMongoTemplateException nmte) {
             System.out.println("Mongo Connection failed");
             return null;
         }
-        return project;
+        return project1;
 
     }
-    */
+
+    public boolean updateResourceAddProject(String username, Project project) {
+        try {
+            resourceAccess.updateResourceAddProject(username, project);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return false;
+        }
+        return true;
+    }
+
 }

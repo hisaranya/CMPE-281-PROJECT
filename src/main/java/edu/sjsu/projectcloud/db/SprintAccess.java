@@ -34,34 +34,6 @@ public class SprintAccess {
         return false;
     }
 
-    public boolean updateSprintAddResource(Resource resource, String projectName, String sprintName) {
-        MongoOperations mongoOperations = getMongoOperationInstance();
-        if (mongoOperations != null) {
-            Project project = mongoOperations.findOne(query(where("projectname").is(projectName).and("sprintName").is(sprintName)), Project.class);
-            if (project != null) {
-                project.addResource(resource);
-                String projectId = project.getId();
-                mongoOperations.upsert(query(where("projectname").is(projectName)), Update.update(projectId, project), Project.class);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateProjectAddTask(Task task, String projectName) {
-        MongoOperations mongoOperations = getMongoOperationInstance();
-        if (mongoOperations != null) {
-            Project project = mongoOperations.findOne(query(where("projectname").is(projectName)), Project.class);
-            if (project != null) {
-                project.addTask(task);
-                String projectId = project.getId();
-                mongoOperations.upsert(query(where("projectname").is(projectName)), Update.update(projectId, project), Project.class);
-            }
-            return true;
-        }
-        return false;
-    }
-
     private MongoOperations getMongoOperationInstance() {
         MongoOperations mongoOperations = null;
         try {
@@ -73,4 +45,11 @@ public class SprintAccess {
         return mongoOperations;
     }
 
+    public void updateSprintAddTask(String sprintname, String projectname, Task task) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        mongoOperations.updateFirst(query(where("projectname").is(projectname).and("sprintName").is(sprintname)), new Update().push("tasks", task), Resource.class);
+    }
 }
