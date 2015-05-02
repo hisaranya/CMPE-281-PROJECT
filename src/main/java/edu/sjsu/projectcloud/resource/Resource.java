@@ -9,9 +9,7 @@ import java.util.List;
  * Created by mallika on 4/30/15.
  */
 public class Resource {
-
     protected String id;
-
     protected String username;
     protected String password;
     List<Project> projects = new ArrayList<>();

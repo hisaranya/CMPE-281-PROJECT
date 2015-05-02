@@ -4,11 +4,15 @@ import edu.sjsu.projectcloud.dataAccess.DAO;
 import edu.sjsu.projectcloud.dataAccess.DAOFactory;
 import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
+import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
+import edu.sjsu.projectcloud.exceptions.NoSuchUserException;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
+import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskScrum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -31,6 +35,9 @@ import java.util.List;
 @RequestMapping("/cmpe281project")
 @ComponentScan
 public class HelloApp {
+    @Autowired
+    UserSessionInfo userSessionInfo;
+
     AppHandler appHandler = new AppHandler();
 
     public static void main(String... args) {
@@ -64,15 +71,20 @@ public class HelloApp {
 
     @RequestMapping(value = "/index/users", method = RequestMethod.POST)
     public String getResource(@RequestParam String username, @RequestParam String password, Model model) {
-        if (appHandler.doesUserExist(username) == null) {
+        try {
+            appHandler.validateAndGetUser(username, password);
+        } catch(InvalidLoginException e) {
             return "nosuchuser";
-        }
-        if (!appHandler.validateUsernamePassword(username, password)) {
+        } catch(NoSuchUserException e) {
             return "login";
         }
+
+        userSessionInfo.setUsername(username);
+        userSessionInfo.setPassword(password);
+
         Project project = new Project();
         model.addAttribute("project", project);
-        model.addAttribute("username", username);
+        model.addAttribute("userSessionInfo", userSessionInfo);
         return "preferences";
     }
 

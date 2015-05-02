@@ -3,8 +3,11 @@ package edu.sjsu.projectcloud;
 import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
+import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
+import edu.sjsu.projectcloud.exceptions.NoSuchUserException;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
+import edu.sjsu.projectcloud.session.User;
 
 /**
  * Created by mallika on 5/1/15.
@@ -12,6 +15,28 @@ import edu.sjsu.projectcloud.resource.Resource;
 public class AppHandler {
     ResourceAccess resourceAccess = new ResourceAccess();
     ProjectAccess projectAccess = new ProjectAccess();
+
+    public User validateAndGetUser(String username, String password) throws NoSuchUserException, InvalidLoginException {
+        User u = new User();
+        try {
+            Resource r = resourceAccess.findResource(username);
+
+            if (r == null) {
+                throw new NoSuchUserException();
+            }
+
+            if (validateUsernamePassword(username, password)) {
+                u = new User(r);
+                return u;
+            } else {
+                throw new InvalidLoginException();
+            }
+        } catch (NullMongoTemplateException e) {
+            e.printStackTrace();
+        }
+
+        return u;
+    }
 
     public Resource doesUserExist(String username) {
         Resource resource;

@@ -58,7 +58,7 @@
 
     <h4> Select a Project Type </h4>
 
-    <p th:text="'Hello, ' + ${username}"/>
+    <p th:text="'Hello, ' + ${userSessionInfo.username}"/>
 
     <form action="#" name="myForm" onsubmit="return validateForm()" th:action="@{/cmpe281project/projects}"
           th:object="${project}" method="post">
@@ -90,7 +90,7 @@
 
 
             <div class="form-group">
-                <input type="hidden" id = "ownername" name="ownername" th:value="${username}" />
+                <input type="hidden" id = "ownername" name="ownername" th:value="${userSessionInfo.username}" />
             </div>
 
 
