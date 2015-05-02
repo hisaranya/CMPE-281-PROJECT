@@ -98,6 +98,35 @@ public class HelloApp {
     }
 
 
+    @RequestMapping(value = "/test/TaskScrumPage", method = RequestMethod.GET)
+    public String showMockTaskScrumPage(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
+        // This is dummy, replace with access to DAO
+        model.addAttribute("task", new TaskScrum("test", "test", "test", 1, 1));
+        return "TaskScrum";
+    }
+
+
+
+    @RequestMapping(value = "/test/TaskScrumPage", method = RequestMethod.GET)
+    public String showMockTaskScrumPage(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
+        // This is dummy, replace with access to DAO
+        model.addAttribute("task", new TaskScrum("test", "test", "test", 1, 1));
+        return "TaskScrum";
+    }
+
+    @RequestMapping(value = "/projects", method = RequestMethod.POST)
+    public String createProject(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
+        String type = project.getProjecttype();
+        ProjectAccess projectAccess = new ProjectAccess();
+        projectAccess.insertProject(project);
+        DAO dao = this.getDAO(type);
+        Task task1 = dao.getTask();
+        model.addAttribute("task", task1);
+        return task1.getClass().getSimpleName();
+    }
+
+
+
 
 }
 
