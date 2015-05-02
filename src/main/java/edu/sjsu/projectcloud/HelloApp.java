@@ -8,6 +8,7 @@ import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
 import edu.sjsu.projectcloud.exceptions.NoSuchUserException;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
+import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
@@ -66,21 +67,27 @@ public class HelloApp {
         Project project = new Project();
         model.addAttribute("project", project);
         model.addAttribute("username", resource.getUsername());
+
+        userSessionInfo.setUsername(resource.getUsername());
+        userSessionInfo.setPassword(resource.getPassword());
+        userSessionInfo.setId(resource.getId());
+
+        model.addAttribute("userSessionInfo", userSessionInfo);
         return "preferences";
     }
 
     @RequestMapping(value = "/index/users", method = RequestMethod.POST)
     public String getResource(@RequestParam String username, @RequestParam String password, Model model) {
         try {
-            appHandler.validateAndGetUser(username, password);
+            User u = appHandler.validateAndGetUser(username, password);
+            userSessionInfo.setUsername(u.getUsername());
+            userSessionInfo.setPassword(u.getPassword());
+            userSessionInfo.setId(u.getId());
         } catch(InvalidLoginException e) {
             return "nosuchuser";
         } catch(NoSuchUserException e) {
             return "login";
         }
-
-        userSessionInfo.setUsername(username);
-        userSessionInfo.setPassword(password);
 
         Project project = new Project();
         model.addAttribute("project", project);
@@ -120,6 +127,8 @@ public class HelloApp {
         Task task1 = dao.getTask();
         model.addAttribute("projectname", project.getProjectname());
         model.addAttribute("username", project.getOwnername());
+        model.addAttribute("userSessionInfo", userSessionInfo);
+
         if (project.getProjecttype().equals("SCRUM")) {
             Sprint sprint = new Sprint();
             model.addAttribute(sprint);
@@ -137,6 +146,7 @@ public class HelloApp {
         model.addAttribute("username", username);
         model.addAttribute("projectname", projectname);
         model.addAttribute("sprintName", sprint.getSprintName());
+        model.addAttribute("userSessionInfo", userSessionInfo);
         return "TaskScrum";
     }
 }
