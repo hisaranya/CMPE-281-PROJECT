@@ -19,6 +19,8 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
+    public Task() {}
+
     public String getId() {
         return id;
     }

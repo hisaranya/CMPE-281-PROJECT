@@ -14,6 +14,8 @@ public class TaskScrum extends Task {
         this.hoursCompleted = hoursCompleted;
     }
 
+    public TaskScrum() {}
+
     public int getHoursAllotted() {
         return hoursAllotted;
     }

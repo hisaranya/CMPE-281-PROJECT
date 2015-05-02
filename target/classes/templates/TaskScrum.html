@@ -238,9 +238,9 @@
     window.onload = function () {
         $("#edit_button").hide();
 
-
+        var projectId="1";
         $.ajax({
-            url: "./" + "/allstories",
+            url: "/cmpe281project/api/getAllSprintsForProject?projectId=" + projectId,
             type: "GET",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
@@ -287,6 +287,10 @@
         var file_data3 = $('#hourscompleted').val();
 
 
+
+        var projectId="1"; // TODO get projectId from Model
+
+
         var json = {
             "file_name": file_name,
             "file_data1": file_data1,
@@ -294,7 +298,7 @@
             "file_data3": file_data3
         };
         $.ajax({
-            url: "./" + "/story",
+            url: "/cmpe281project/api/addStory?projectId=" + projectId,
             data: JSON.stringify(json),
             type: "POST",
 

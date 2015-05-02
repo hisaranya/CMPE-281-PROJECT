@@ -10,14 +10,16 @@ public class Sprint {
     private String id;
 
     protected String sprintName;
-    protected Date startDate;
-    protected Date endDate;
+    protected String startDate;
+    protected String endDate;
 
-    public Sprint(String sprintName, Date startDate, Date endDate) {
+    public Sprint(String sprintName, String startDate, String endDate) {
         this.sprintName = sprintName;
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public Sprint() {}
 
     public String getId() {
         return id;
@@ -35,19 +37,19 @@ public class Sprint {
         this.sprintName = sprintName;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }

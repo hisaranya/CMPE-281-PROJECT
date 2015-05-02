@@ -23,8 +23,8 @@ public class RestController {
         // get sprints and return the list of sprints here
 
         List<Sprint> sprints = new ArrayList<>();
-        sprints.add(new Sprint("Sprint-1", new Date(), new Date()));
-        sprints.add(new Sprint("Sprint-2", new Date(), new Date()));
+        sprints.add(new Sprint("Sprint-1", "05/02/2015", "05/09/2015"));
+        sprints.add(new Sprint("Sprint-2", "05/10/2015", "05/17/2015"));
         return sprints;
     }
 
@@ -42,7 +42,8 @@ public class RestController {
 
         return "success";
     }
-
+/*
     @RequestMapping(value = "/allStory", method = RequestMethod.POST)
     public
+    */
 }

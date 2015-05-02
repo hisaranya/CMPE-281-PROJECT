@@ -6,11 +6,14 @@ import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
+import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
+import edu.sjsu.projectcloud.task.TaskScrum;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,7 @@ import java.util.List;
 @EnableAutoConfiguration
 @Controller
 @RequestMapping("/cmpe281project")
+@ComponentScan
 public class HelloApp {
     AppHandler appHandler = new AppHandler();
 
@@ -79,6 +83,19 @@ public class HelloApp {
         }
     }
 
+
+
+    private DAO getDAO(String type) {
+        return DAOFactory.getInstance(type);
+    }
+
+    @RequestMapping(value = "/test/TaskScrumPage", method = RequestMethod.GET)
+    public String showMockTaskScrumPage(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
+        // This is dummy, replace with access to DAO
+        model.addAttribute("task", new TaskScrum("test", "test", "test", 1, 1));
+        return "TaskScrum";
+    }
+
     @RequestMapping(value = "/projects", method = RequestMethod.POST)
     public String createProject(@ModelAttribute Project project, Model model) {
         if (appHandler.doesProjectExistInResource(project.getOwnername(), project) != null) {
@@ -89,50 +106,27 @@ public class HelloApp {
         appHandler.updateResourceAddProject(project.getOwnername(), project);
         DAO dao = this.getDAO(project.getProjecttype());
         Task task1 = dao.getTask();
-        model.addAttribute("task", task1);
-
+        model.addAttribute("projectname", project.getProjectname());
+        model.addAttribute("username", project.getOwnername());
         if (project.getProjecttype().equals("SCRUM")) {
+            Sprint sprint = new Sprint();
+            model.addAttribute(sprint);
             return "createSprint";
         } else {
+            model.addAttribute("task", task1);
             return task1.getClass().getSimpleName();
         }
     }
 
-    private DAO getDAO(String type) {
-        return DAOFactory.getInstance(type);
-    }
-
-
-    @RequestMapping(value = "/test/TaskScrumPage", method = RequestMethod.GET)
-    public String showMockTaskScrumPage(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
-        // This is dummy, replace with access to DAO
-        model.addAttribute("task", new TaskScrum("test", "test", "test", 1, 1));
+    @RequestMapping(value = "/sprint/{username}/{projectname}", method = RequestMethod.POST)
+    public String createSprint(@ModelAttribute Sprint sprint, @PathVariable String username, @PathVariable String projectname, Model model) {
+        Task taskScrum = new TaskScrum();
+        model.addAttribute("task", taskScrum);
+        model.addAttribute("username", username);
+        model.addAttribute("projectname", projectname);
+        model.addAttribute("sprintName", sprint.getSprintName());
         return "TaskScrum";
     }
-
-
-
-    @RequestMapping(value = "/test/TaskScrumPage", method = RequestMethod.GET)
-    public String showMockTaskScrumPage(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
-        // This is dummy, replace with access to DAO
-        model.addAttribute("task", new TaskScrum("test", "test", "test", 1, 1));
-        return "TaskScrum";
-    }
-
-    @RequestMapping(value = "/projects", method = RequestMethod.POST)
-    public String createProject(@ModelAttribute Project project, @ModelAttribute String username, Model model) {
-        String type = project.getProjecttype();
-        ProjectAccess projectAccess = new ProjectAccess();
-        projectAccess.insertProject(project);
-        DAO dao = this.getDAO(type);
-        Task task1 = dao.getTask();
-        model.addAttribute("task", task1);
-        return task1.getClass().getSimpleName();
-    }
-
-
-
-
 }
 
 
