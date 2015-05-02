@@ -21,6 +21,10 @@ public class Task {
         this.resourceName = resourceName;
     }
 
+    public Task(String status, String taskName, String taskDescription) {
+        this(status, taskName, taskDescription, "");
+    }
+
     public Task() {}
 
     public String getId() {

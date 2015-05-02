@@ -11,5 +11,9 @@ public class TaskKanban extends Task {
         super(status, taskName, taskDescription, resourceName);
     }
 
+    public TaskKanban(String status, String taskName, String taskDescription) {
+        super(status, taskName, taskDescription);
+    }
+
 
 }

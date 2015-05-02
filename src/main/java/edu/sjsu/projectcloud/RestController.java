@@ -54,6 +54,7 @@ public class RestController {
     @RequestMapping(value = "/test/dummyproject/{projectid}", method = RequestMethod.POST)
     public Project returnDummyProjectPOJO(@PathVariable String projectid, @PathVariable String userid) {
         Project project = setUpDummyProject(projectid);
+        return project;
     }
 
     private Project setUpDummyProject(String projectid) {

@@ -16,6 +16,12 @@ public class TaskWF extends Task {
         this.endDate = endDate;
     }
 
+    public TaskWF(String status, String taskName, String taskDescription, Date startDate, Date endDate) {
+        super(status, taskName, taskDescription);
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public Date getStartDate() {
         return startDate;
     }

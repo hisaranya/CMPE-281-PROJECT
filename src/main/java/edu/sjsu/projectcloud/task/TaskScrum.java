@@ -14,6 +14,14 @@ public class TaskScrum extends Task {
         this.hoursCompleted = hoursCompleted;
     }
 
+    public TaskScrum(String status, String taskName, String taskDescription, int hoursAllotted, int hoursCompleted) {
+        super(status, taskName, taskDescription);
+        this.hoursAllotted = hoursAllotted;
+        this.hoursCompleted = hoursCompleted;
+    }
+
+
+
     public TaskScrum() {}
 
     public int getHoursAllotted() {
