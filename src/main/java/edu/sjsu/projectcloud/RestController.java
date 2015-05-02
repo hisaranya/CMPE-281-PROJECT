@@ -1,11 +1,11 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.project.Project;
+import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.task.TaskScrum;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,8 +42,39 @@ public class RestController {
 
         return "success";
     }
-/*
-    @RequestMapping(value = "/allStory", method = RequestMethod.POST)
-    public
-    */
+
+    @RequestMapping(value = "/test/dummyproject/{projectid}", method = RequestMethod.POST)
+    public Project returnDummyProjectPOJO(@PathVariable String projectid, @PathVariable String userid) {
+        Project project = setUpDummyProject(projectid);
+    }
+
+    private Project setUpDummyProject(String projectid) {
+        ProjectScrum project = new ProjectScrum("DummyProject", "SCRUM", "05/02/2015", "05/31/2015", "Team16");
+        project.setId(projectid);
+        project.setSprints(setupDummySprints());
+        return project;
+    }
+
+    private List<Sprint> setupDummySprints() {
+        List<Sprint> sprints = new ArrayList<>();
+        Sprint sprint1 = new Sprint("DummySprint1", "05/02/2015", "05/09/2015");
+        Sprint sprint2 = new Sprint("DummySprint2", "05/09/2015", "05/16/2015");
+        sprint1 = addStories(sprint1);
+        sprint2 = addStories(sprint2);
+        sprints.add(sprint1);
+        sprints.add(sprint2);
+        return sprints;
+    }
+
+    private Sprint addStories(Sprint sprint) {
+        String taskName = sprint.getSprintName()+"DummyTask1";
+        TaskScrum taskScrum = new TaskScrum("In progress", taskName, "Dummy Task 1", "XYZ", 50, 10);
+        sprint.addTask(taskScrum);
+        return sprint;
+    }
+
+
+
+
+
 }

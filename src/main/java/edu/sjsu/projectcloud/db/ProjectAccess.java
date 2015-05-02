@@ -2,6 +2,7 @@ package edu.sjsu.projectcloud.db;
 
 import com.mongodb.Mongo;
 import edu.sjsu.projectcloud.project.Project;
+import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
@@ -33,6 +34,28 @@ public class ProjectAccess {
             return true;
         }
         return false;
+    }
+
+    public Sprint findSprintinProject(String username, String projectName, String projectType, String sprintName) throws  NullMongoTemplateException{
+        Sprint sprint = null;
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        ProjectScrum project = mongoOperations.findOne(query(where("projectname").is(projectName).and("ownername").is(username).and("projecttype").is(projectType)), ProjectScrum.class);
+        if(project != null){
+            List<Sprint> sprints = project.getSprints();
+            if (sprints.size() == 0) {
+                return null;
+            }
+            for (Sprint sprint1 : sprints) {
+                if (sprint1.getSprintName().equals(sprintName)) {
+                    sprint = sprint1;
+                    break;
+                }
+            }
+        }
+        return sprint;
     }
 
     public void updateProjectAddTask(String projectname, String username, Task task) throws NullMongoTemplateException {

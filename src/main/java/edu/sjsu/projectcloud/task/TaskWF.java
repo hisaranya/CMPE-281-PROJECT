@@ -10,8 +10,8 @@ public class TaskWF extends Task {
     protected Date startDate;
     protected Date endDate;
 
-    public TaskWF(String status, String taskName, String taskDescription, Date startDate, Date endDate) {
-        super(status, taskName, taskDescription);
+    public TaskWF(String status, String taskName, String taskDescription, String resourceName, Date startDate, Date endDate) {
+        super(status, taskName, taskDescription, resourceName);
         this.startDate = startDate;
         this.endDate = endDate;
     }

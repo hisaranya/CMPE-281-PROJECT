@@ -10,8 +10,16 @@ import java.util.List;
  */
 public class ProjectScrum extends Project {
 
-    private List<Sprint> sprint = new ArrayList<>();
+    private List<Sprint> sprints = new ArrayList<>();
     public ProjectScrum(String projecttype, String projectname, String startdate, String enddate, String ownername) {
         super(projectname, projecttype, startdate, enddate, ownername);
+    }
+
+    public List<Sprint> getSprints() {
+        return sprints;
+    }
+
+    public void setSprints(List<Sprint> sprints) {
+        this.sprints = sprints;
     }
 }

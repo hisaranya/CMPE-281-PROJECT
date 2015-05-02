@@ -8,6 +8,8 @@ import edu.sjsu.projectcloud.exceptions.NoSuchUserException;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
+import edu.sjsu.projectcloud.sprint.Sprint;
+
 
 /**
  * Created by mallika on 5/1/15.
@@ -85,6 +87,17 @@ public class AppHandler {
             return false;
         }
         return true;
+    }
+
+    public Sprint doesSprintExistInProject(String projectname, String projecttype, String username, Sprint sprint)  {
+        Sprint newSprint;
+        try {
+            newSprint = projectAccess.findSprintinProject(username, projectname, projecttype, sprint.getSprintName());
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo connection not established");
+            return null;
+        }
+        return newSprint;
     }
 
 }

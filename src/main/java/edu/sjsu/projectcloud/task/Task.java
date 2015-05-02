@@ -12,11 +12,13 @@ public class Task {
     protected String status;
     protected String taskName;
     protected String taskDescription;
+    protected String resourceName;
 
-    public Task(String status, String taskName, String taskDescription) {
+    public Task(String status, String taskName, String taskDescription, String resourceName) {
         this.status = status;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
+        this.resourceName = resourceName;
     }
 
     public Task() {}
@@ -51,5 +53,13 @@ public class Task {
 
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 }

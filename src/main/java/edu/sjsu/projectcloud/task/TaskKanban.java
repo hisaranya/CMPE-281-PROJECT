@@ -7,8 +7,8 @@ import org.springframework.data.annotation.Id;
  */
 public class TaskKanban extends Task {
 
-    public TaskKanban(String status, String taskName, String taskDescription) {
-        super(status, taskName, taskDescription);
+    public TaskKanban(String status, String taskName, String taskDescription, String resourceName) {
+        super(status, taskName, taskDescription, resourceName);
     }
 
 
