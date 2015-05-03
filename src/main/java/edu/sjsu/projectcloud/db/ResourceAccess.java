@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.core.query.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -92,5 +94,15 @@ public class ResourceAccess {
             throw new NullMongoTemplateException();
         }
         mongoOperations.updateFirst(query(where("username").is(username)), new Update().push("projects", project), Resource.class);
+    }
+
+    public List<Project> getProjects(String userid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Resource resource = mongoOperations.findOne(query(where("_id").is(userid)), Resource.class);
+        List<Project> projects = resource.getProjects();
+        return projects;
     }
 }

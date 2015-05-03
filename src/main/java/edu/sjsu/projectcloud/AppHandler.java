@@ -221,7 +221,23 @@ public class AppHandler {
     }
 
     public List<Task> getAllTasks(String projectid) {
-        List<Task> tasks = new ArrayList<>()
+        List<Task> tasks = new ArrayList<>();
+        try {
+            tasks = projectAccess.getTasks(projectid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+        return tasks;
+    }
+
+    public List<Project> getAllProjectsPerResource(String userid) {
+        List<Project> projects = new ArrayList<>();
+        try {
+            projects = resourceAccess.getProjects(userid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+        return projects;
     }
 
 

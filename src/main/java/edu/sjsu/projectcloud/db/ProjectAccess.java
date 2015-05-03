@@ -3,6 +3,7 @@ package edu.sjsu.projectcloud.db;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import edu.sjsu.projectcloud.project.Project;
+import edu.sjsu.projectcloud.project.ProjectKanban;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.sprint.Sprint;
@@ -160,5 +161,14 @@ public class ProjectAccess {
         return sprints;
     }
 
+    public List<Task> getTasks(String projectid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
 
+        Project project = mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
+        List<Task> tasks = project.getTasks();
+        return tasks;
+    }
 }
