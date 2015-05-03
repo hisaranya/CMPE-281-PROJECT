@@ -100,4 +100,17 @@ public class MainAppController {
         m.addAttribute("userSessionInfo", userSessionInfo);
 
     }
+
+
+    @RequestMapping(value = "/project/{projectId}/tasks", method = RequestMethod.GET)
+    public String viewTaskslist(Model model, @PathVariable("projectId") String projectId) {
+        model.addAttribute("userSessionInfo", userSessionInfo);
+
+
+        AppHandler appHandler = new AppHandler();
+
+        Project project = appHandler.getProject(projectId);
+        model.addAttribute("project", project);
+        return "WFJtable";
+    }
 }

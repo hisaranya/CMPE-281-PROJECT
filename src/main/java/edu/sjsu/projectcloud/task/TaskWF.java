@@ -6,9 +6,11 @@ import java.util.Date;
  * Created by mallika on 4/30/15.
  */
 public class TaskWF extends Task {
-
     protected Date startDate;
     protected Date endDate;
+
+    public TaskWF() {}
+
 
     public TaskWF(String status, String taskName, String taskDescription, String resourceName, Date startDate, Date endDate) {
         super(status, taskName, taskDescription, resourceName);
