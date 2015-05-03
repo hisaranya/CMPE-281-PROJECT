@@ -17,32 +17,40 @@
         $('#PeopleTableContainer').jtable({
             title: 'Table of people',
             actions: {
-                listAction: 'PersonActions.php?action=list',
+                listAction: '/cmpe281project/api/getAllStoriesForJTable?projectId=1',
                 createAction: 'PersonActions.php?action=create',
                 updateAction: 'PersonActions.php?action=update',
                 deleteAction: 'PersonActions.php?action=delete'
             },
             fields: {
-                PersonId: {
-                    key: true,
-                    create: false,
-                    edit: false,
-                    list: false
+                id: {
+                    title: 'TaskId'
                 },
-                Name: {
-                    title: 'Author Name',
+                status: {
+                    title: 'Status',
                     width: '40%'
                 },
-                Age: {
-                    title: 'Age',
+                taskName: {
+                    title: 'Name',
                     width: '20%'
                 },
-                RecordDate: {
-                    title: 'Record date',
+                taskDescription: {
+                    title: 'Description',
                     width: '30%',
-                    type: 'date',
                     create: false,
                     edit: false
+                },
+                resourceName: {
+                    title: 'resourceName',
+                    width: '20%'
+                },
+                hoursAllotted: {
+                    title: 'hoursAlloted',
+                    width: '20%'
+                },
+                hoursCompleted: {
+                    title: 'hoursCompleted',
+                    width: '20%'
                 }
             }
         });

@@ -1,11 +1,13 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.jtable.JTableResult;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import javassist.tools.reflect.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,28 @@ public class RestController {
     @Autowired
     UserSessionInfo userSessionInfo;
 
+    private class SampleBean {
+        public String user;
+        public String pass;
+
+        public SampleBean(String user, String pass) {
+            this.user = user;
+            this.pass = pass;
+        }
+    }
+
+    @RequestMapping(value = "/getAllStoriesForJTable", method = RequestMethod.POST)
+    public JTableResult getAllSprintsForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
+        JTableResult result = new JTableResult();
+        result.setResult("OK");
+
+        for (int i=0; i < 20; i++) {
+            TaskScrum task = new TaskScrum("Status", "Task Name", "Description", "resource name", 1, 10);
+            task.setId(i+"");
+            result.addRecord(task);
+        }
+        return result;
+    }
 
 
     @RequestMapping(value = "/getAllSprintsForProject", method = RequestMethod.GET)
