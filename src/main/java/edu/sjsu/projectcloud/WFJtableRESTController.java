@@ -23,7 +23,7 @@ public class WFJtableRESTController {
     private TaskWF tasks;
 
     @RequestMapping(value = "/listTasks", method = RequestMethod.POST)
-    public JTableResult getAllTasksForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
+    public  @ResponseBody JTableResult getAllTasksForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
         JTableResult<Task> result = new JTableResult<>(true);
         result.setResult("OK");
 
