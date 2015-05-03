@@ -4,6 +4,7 @@ import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import javax.websocket.server.PathParam;
 
 @Controller
 @RequestMapping("/cmpe281project")
+@ComponentScan
 public class MainAppController {
     @Autowired
     UserSessionInfo userSessionInfo;

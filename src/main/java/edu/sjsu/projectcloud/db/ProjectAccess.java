@@ -1,5 +1,6 @@
 package edu.sjsu.projectcloud.db;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
@@ -9,6 +10,7 @@ import edu.sjsu.projectcloud.task.Task;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.net.UnknownHostException;
@@ -32,9 +34,8 @@ public class ProjectAccess {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations != null) {
             mongoOperations.insert(project);
-             dbProject = mongoOperations.findOne(query(where("projectname").is(project.getProjectname()).and("ownername").is(project.getOwnername())), Project.class);
         }
-        return dbProject;
+        return project;
     }
 
     public Sprint findSprintinProject(String username, String projectName, String projectType, String sprintName) throws  NullMongoTemplateException{
@@ -75,15 +76,40 @@ public class ProjectAccess {
         mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().push("sprints", sprint), Project.class);
     }
 
-    private MongoOperations getMongoOperationInstance() {
-    MongoOperations mongoOperations = null;
-    try {
-        mongoOperations = getMongoOperations();
-    } catch (UnknownHostException uhe) {
-        System.out.println("Unknown Host");
-        return null;
+    public Project getProject(String projectid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Project project = mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
+        return project;
     }
-    return mongoOperations;
-}
+
+    private MongoOperations getMongoOperationInstance() {
+        MongoOperations mongoOperations = null;
+        try {
+            mongoOperations = getMongoOperations();
+        } catch (UnknownHostException uhe) {
+            System.out.println("Unknown Host");
+            return null;
+        }
+        return mongoOperations;
+    }
+
+    public void updateProjectAddStoryToSprint(String projectid, Sprint sprint, Task task) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+
+
+        Query query = new Query(where("_id").is(projectid).and("sprints._id").is(sprint.getId()));
+        Update update = new Update().pull("sprints", new BasicDBObject("_id", sprint.getId()));
+        mongoOperations.updateFirst(query, update, Project.class);
+
+
+        //mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().pull("sprints._id", sprint.getId()), Project.class);
+        mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().push("sprints", sprint), Project.class);
+    }
 
 }

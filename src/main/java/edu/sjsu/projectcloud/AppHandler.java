@@ -1,15 +1,14 @@
 package edu.sjsu.projectcloud;
 
-import edu.sjsu.projectcloud.db.NullMongoTemplateException;
-import edu.sjsu.projectcloud.db.ProjectAccess;
-import edu.sjsu.projectcloud.db.ResourceAccess;
-import edu.sjsu.projectcloud.db.SprintAccess;
+import edu.sjsu.projectcloud.db.*;
 import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
 import edu.sjsu.projectcloud.exceptions.NoSuchUserException;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.task.Task;
+import edu.sjsu.projectcloud.task.TaskScrum;
 
 
 /**
@@ -19,6 +18,7 @@ public class AppHandler {
     ResourceAccess resourceAccess = new ResourceAccess();
     ProjectAccess projectAccess = new ProjectAccess();
     SprintAccess sprintAccess = new SprintAccess();
+    TaskAccess taskAccess = new TaskAccess();
 
     public User validateAndGetUser(String username, String password) throws NoSuchUserException, InvalidLoginException {
         User u = new User();
@@ -51,6 +51,17 @@ public class AppHandler {
             return null;
         }
         return resource;
+    }
+
+    public Project getProject(String projectid) {
+        Project project = null;
+        try {
+            project = projectAccess.getProject(projectid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return null;
+        }
+        return project;
     }
 
     public void insertResource(Resource resource) {
@@ -116,6 +127,18 @@ public class AppHandler {
             return false;
         }
         return true;
+    }
+
+    public Task addStoryToSprint(TaskScrum story, String projectid, String sprintid) {
+        Task dbTask = taskAccess.insertTask(story);
+        try {
+            Sprint sprint = sprintAccess.updateSprintAddTask(sprintid, dbTask);
+            projectAccess.updateProjectAddStoryToSprint(projectid, sprint, story);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return null;
+        }
+        return dbTask;
     }
 
 

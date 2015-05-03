@@ -3,11 +3,13 @@ package edu.sjsu.projectcloud;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +26,17 @@ public class RestController {
     @Autowired
     UserSessionInfo userSessionInfo;
 
+    AppHandler appHandler = new AppHandler();
 
+    @RequestMapping(value = "/ProjectStatus", method = RequestMethod.GET)
+    public List<Sprint> getProjectStatus(@RequestParam(value = "projectId", required = true) String projectId) {
+        // get sprints and return the list of sprints here
+
+        List<Sprint> sprints = new ArrayList<>();
+        sprints.add(new Sprint("Sprint-1", "8", "5"));
+        sprints.add(new Sprint("Sprint-2", "5", "3"));
+        return sprints;
+    }
 
     @RequestMapping(value = "/getAllSprintsForProject", method = RequestMethod.GET)
     public List<Sprint> getAllSprintsForProject(@RequestParam(value = "projectId", required = true) String projectId) {
@@ -84,6 +96,19 @@ public class RestController {
         sprint.addTask(taskScrum);
         return sprint;
     }
+
+    @RequestMapping(value = "/getProjectInfo/{projectid}", method = RequestMethod.GET)
+    public Project getProjectInformation(@PathVariable String projectid) {
+        Project project = appHandler.getProject(projectid);
+        return project;
+    }
+
+    @RequestMapping(value = "/createStory/{projectid}/{sprintid}", method = RequestMethod.POST)
+    public Task createScrumTask(@ModelAttribute TaskScrum story, @PathVariable String projectid, @PathVariable String sprintid, Model model) {
+        appHandler.addStoryToSprint(story, projectid, sprintid);
+        return story;
+    }
+
 
 
 

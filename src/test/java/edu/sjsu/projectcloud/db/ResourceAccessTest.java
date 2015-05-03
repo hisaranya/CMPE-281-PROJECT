@@ -1,11 +1,13 @@
 package edu.sjsu.projectcloud.db;
 
 import edu.sjsu.projectcloud.HelloApp;
+import edu.sjsu.projectcloud.RestController;
 import edu.sjsu.projectcloud.project.Project;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +15,7 @@ import static org.junit.Assert.*;
  * Created by mallika on 5/1/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = HelloApp.class)
+@WebAppConfiguration
 public class ResourceAccessTest {
 
     @Test
