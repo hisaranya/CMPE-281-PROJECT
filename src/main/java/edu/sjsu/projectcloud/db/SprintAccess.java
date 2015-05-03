@@ -11,7 +11,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+
+import javax.validation.constraints.Null;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
@@ -80,5 +83,15 @@ public class SprintAccess {
         mongoOperations.updateFirst(query, update, Sprint.class);
         Sprint sprint = mongoOperations.findOne(query(where("_id").is(sprintid)), Sprint.class);
         return sprint;
+    }
+
+    public List<Task> getStories(String sprintid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Sprint sprint = mongoOperations.findOne(query(where("_id").is(sprintid)), Sprint.class);
+        List<Task> stories = sprint.getTasks();
+        return stories;
     }
 }

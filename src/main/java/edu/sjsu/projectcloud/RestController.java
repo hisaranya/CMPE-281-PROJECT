@@ -154,6 +154,12 @@ public class RestController {
         return dbTask;
     }
 
+    @RequestMapping(value = "/updateKanbanFTask/{projectid}", method = RequestMethod.POST)
+    public Task updateKanbanTask(@ModelAttribute TaskWF task, @PathVariable String projectid, Model model) {
+        Task dbTask = appHandler.updateTaskInProject(task, projectid);
+        return dbTask;
+    }
+
     @RequestMapping(value = "/deleteKanbanTask/{projectid}/{taskid}", method = RequestMethod.POST)
     public String deleteKanbanTask(@PathVariable String projectid, @PathVariable String taskid, Model model) {
         appHandler.deleteTaskFromProject(projectid, taskid);
@@ -166,9 +172,27 @@ public class RestController {
         return dbTask;
     }
 
+    @RequestMapping(value = "/updateWFTask/{projectid}", method = RequestMethod.POST)
+    public Task updateWFTask(@ModelAttribute TaskWF task, @PathVariable String projectid, Model model) {
+        Task dbTask = appHandler.updateTaskInProject(task, projectid);
+        return dbTask;
+    }
+
     @RequestMapping(value = "/deleteWFTask/{projectid}", method = RequestMethod.POST)
     public String createWFTask(@PathVariable String projectid, @PathVariable String taskid, Model model) {
         appHandler.deleteTaskFromProject(projectid, taskid);
         return ResponseStatus.class.getSimpleName();
+    }
+
+    @RequestMapping(value = "getAllStories/{projectid}/{sprintid}", method = RequestMethod.GET)
+    public List<Task> getAllStories(@PathVariable String projectid, @PathVariable String sprintid, Model model) {
+        List<Task> stories = appHandler.getAllStoriesForSprint(projectid, sprintid);
+        return stories;
+    }
+
+    @RequestMapping(value = "getAllSprints/{projectid}", method = RequestMethod.GET)
+    public List<Sprint> getAllSprints(@PathVariable String projectid, Model model) {
+        List<Sprint> sprints = appHandler.getAllSprintsForProject(projectid);
+        return sprints;
     }
 }

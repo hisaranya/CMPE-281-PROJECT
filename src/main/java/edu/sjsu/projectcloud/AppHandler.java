@@ -11,6 +11,9 @@ import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by mallika on 5/1/15.
@@ -195,5 +198,27 @@ public class AppHandler {
             System.out.println("Mongo Connection failed");
         }
     }
+
+    public List<Task> getAllStoriesForSprint(String projectid, String sprintid) {
+        List<Task> stories = new ArrayList<>();
+        try {
+           stories = sprintAccess.getStories(sprintid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+        return stories;
+    }
+    /*
+
+    public List<Sprint> getAllSprintsForProject(String projectid) {
+        List<Sprint> sprints = new ArrayList<>();
+        try {
+            sprints = projectAccess.getSprints(projectid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+        return sprints;
+    }
+    */
 
 }

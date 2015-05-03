@@ -128,6 +128,18 @@ public class ProjectAccess {
         mongoOperations.updateFirst(query, update, Project.class);
     }
 
+    public void updateProjectUpdateTaskInProject(Task task, String projectid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(projectid));
+        Update update = new Update().pull("tasks", new BasicDBObject("_id", task.getId()));
+        mongoOperations.updateFirst(query, update, Project.class);
+        update = new Update().push("tasks", task);
+        mongoOperations.updateFirst(query, update, Project.class);
+    }
+
     public void deleteTaskFromProject(String projectid, String taskid) throws NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
@@ -137,5 +149,14 @@ public class ProjectAccess {
         Update update = new Update().pull("tasks", new BasicDBObject("_id", taskid));
         mongoOperations.updateFirst(query, update, Project.class);
     }
+    /*
+    public List<Sprint> getSprints(String projectid) {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        mongoOperations.findOne(where())
+    }
+    */
 
 }
