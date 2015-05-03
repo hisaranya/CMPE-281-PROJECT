@@ -76,13 +76,8 @@ public class MainAppController {
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
     public String viewProjectList(Model model) {
-        Project projectInfo = new Project();
-        projectInfo.setId("project-1234");
-
-        model.addAttribute("pagetype", "Display List Page");
         model.addAttribute("userSessionInfo", userSessionInfo);
-        model.addAttribute("project", projectInfo);
-        return "JTableTest";
+        return "manageProjectsForAllType";
     }
 
     @RequestMapping(value = "/project/{projectId}/sprint/{sprintId}/stories", method = RequestMethod.GET)
