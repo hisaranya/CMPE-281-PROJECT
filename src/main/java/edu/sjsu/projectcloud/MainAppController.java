@@ -75,9 +75,9 @@ public class MainAppController {
     }
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public String viewProjectList(@PathVariable("PID") String PID, Model model) {
+    public String viewProjectList(Model model) {
         model.addAttribute("pagetype", "Display List Page");
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "polymorphicView";
+        return "JTableTest";
     }
 }
