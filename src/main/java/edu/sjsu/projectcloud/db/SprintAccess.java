@@ -1,5 +1,6 @@
 package edu.sjsu.projectcloud.db;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
@@ -8,6 +9,7 @@ import edu.sjsu.projectcloud.task.Task;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import java.net.UnknownHostException;
 
@@ -50,6 +52,32 @@ public class SprintAccess {
             throw new NullMongoTemplateException();
         }
         mongoOperations.updateFirst(query(where("_id").is(sprintid)), new Update().push("tasks", task), Sprint.class);
+        Sprint sprint = mongoOperations.findOne(query(where("_id").is(sprintid)), Sprint.class);
+        return sprint;
+    }
+
+    public Sprint updateSprintUpdateTask(String sprintid, Task task) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(sprintid));
+        Update update = new Update().pull("tasks", new BasicDBObject("_id", task.getId()));
+        mongoOperations.updateFirst(query, update, Sprint.class);
+        update = new Update().push("tasks", task);
+        mongoOperations.updateFirst(query, update, Sprint.class);
+        Sprint sprint = mongoOperations.findOne(query, Sprint.class);
+        return sprint;
+    }
+
+    public Sprint updateSprintDeleteStory(String sprintid, String taskScrumid) throws NullMongoTemplateException{
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(sprintid));
+        Update update = new Update().pull("tasks", new BasicDBObject("_id", taskScrumid));
+        mongoOperations.updateFirst(query, update, Sprint.class);
         Sprint sprint = mongoOperations.findOne(query(where("_id").is(sprintid)), Sprint.class);
         return sprint;
     }

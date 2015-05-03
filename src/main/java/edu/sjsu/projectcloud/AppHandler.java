@@ -8,6 +8,7 @@ import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
+import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
 
 
@@ -84,6 +85,7 @@ public class AppHandler {
     public Project doesProjectExistInResource(String username, Project project) {
         Project project1;
         try {
+
             project1 = resourceAccess.findProjectinResource(username, project.getProjectname(), project.getProjecttype());
         } catch (NullMongoTemplateException nmte) {
             System.out.println("Mongo Connection failed");
@@ -133,7 +135,7 @@ public class AppHandler {
         Task dbTask = taskAccess.insertTask(story);
         try {
             Sprint sprint = sprintAccess.updateSprintAddTask(sprintid, dbTask);
-            projectAccess.updateProjectAddStoryToSprint(projectid, sprint, story);
+            projectAccess.updateProjectUpdateStoryInSprint(projectid, sprint, story);
         } catch (NullMongoTemplateException nmte) {
             System.out.println("Mongo Connection failed");
             return null;
@@ -141,6 +143,57 @@ public class AppHandler {
         return dbTask;
     }
 
+    public Task updateStoryInSprint(TaskScrum story, String projectid, String sprintid) {
+        Task dbTask = taskAccess.updateTask(story);
+        try {
+            Sprint sprint = sprintAccess.updateSprintUpdateTask(sprintid, story);
+            projectAccess.updateProjectUpdateStoryInSprint(projectid, sprint, story);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return null;
+        }
+        return dbTask;
+    }
 
+    public void deleteStoryFromSprint(String projectid, String sprintid, String storyid) {
+        try {
+            taskAccess.deleteTask(storyid);
+            Sprint sprint = sprintAccess.updateSprintDeleteStory(sprintid, storyid);
+            projectAccess.updateProjectDeleteStoryFromSprint(projectid, sprint, storyid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+    }
+
+    public Task addTaskToProject(Task task, String projectid) {
+        Task dbTask = taskAccess.insertTask(task);
+        try {
+            projectAccess.updateProjectAddTaskToProject(task, projectid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return null;
+        }
+        return dbTask;
+    }
+
+    public Task updateTaskInProject(Task task, String projectid) {
+        Task dbTask = taskAccess.updateTask(task);
+        try {
+            projectAccess.updateProjectAddTaskToProject(task, projectid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return null;
+        }
+        return dbTask;
+    }
+
+    public void deleteTaskFromProject(String projectid, String taskid) {
+        try {
+            taskAccess.deleteTask(taskid);
+            projectAccess.deleteTaskFromProject(projectid, taskid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+    }
 
 }

@@ -96,20 +96,46 @@ public class ProjectAccess {
         return mongoOperations;
     }
 
-    public void updateProjectAddStoryToSprint(String projectid, Sprint sprint, Task task) throws NullMongoTemplateException {
+    public void updateProjectUpdateStoryInSprint(String projectid, Sprint sprint, Task task) throws NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
-
-
-        Query query = new Query(where("_id").is(projectid).and("sprints._id").is(sprint.getId()));
+        Query query = new Query(where("_id").is(projectid));
         Update update = new Update().pull("sprints", new BasicDBObject("_id", sprint.getId()));
         mongoOperations.updateFirst(query, update, Project.class);
-
-
-        //mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().pull("sprints._id", sprint.getId()), Project.class);
         mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().push("sprints", sprint), Project.class);
+    }
+
+    public void updateProjectDeleteStoryFromSprint(String projectid, Sprint sprint, String taskScrumid) throws NullMongoTemplateException{
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(projectid));
+        Update update = new Update().pull("sprints", new BasicDBObject("_id", sprint.getId()));
+        mongoOperations.updateFirst(query, update, Project.class);
+        mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().push("sprints", sprint), Project.class);
+    }
+
+    public void updateProjectAddTaskToProject(Task task, String projectid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(projectid));
+        Update update = new Update().push("tasks", task);
+        mongoOperations.updateFirst(query, update, Project.class);
+    }
+
+    public void deleteTaskFromProject(String projectid, String taskid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(projectid));
+        Update update = new Update().pull("tasks", new BasicDBObject("_id", taskid));
+        mongoOperations.updateFirst(query, update, Project.class);
     }
 
 }

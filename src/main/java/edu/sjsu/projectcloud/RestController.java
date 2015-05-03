@@ -5,9 +5,11 @@ import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
+import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.task.TaskWF;
 import javassist.tools.reflect.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -134,14 +136,39 @@ public class RestController {
         return story;
     }
 
+    @RequestMapping(value = "/deleteStory/{projectid}/{sprintid}/{storyid}", method = RequestMethod.POST)
+    public String deleteScrumTask(@PathVariable String projectid, @PathVariable String sprintid, @PathVariable String storyid, Model model) {
+        appHandler.deleteStoryFromSprint(projectid, sprintid, storyid);
+        return ResponseStatus.class.getSimpleName();
+    }
 
+    @RequestMapping(value = "/updateStory/{projectid}/{sprintid}", method = RequestMethod.POST)
+    public Task updateScrumTask(@ModelAttribute TaskScrum story, @PathVariable String projectid, @PathVariable String sprintid, Model model) {
+        appHandler.updateStoryInSprint(story, projectid, sprintid);
+        return story;
+    }
 
+    @RequestMapping(value = "/createKanbanTask/{projectid}", method = RequestMethod.POST)
+    public Task createTask(@ModelAttribute TaskKanban task, @PathVariable String projectid, Model model) {
+        Task dbTask = appHandler.addTaskToProject(task, projectid);
+        return dbTask;
+    }
 
+    @RequestMapping(value = "/deleteKanbanTask/{projectid}/{taskid}", method = RequestMethod.POST)
+    public String deleteKanbanTask(@PathVariable String projectid, @PathVariable String taskid, Model model) {
+        appHandler.deleteTaskFromProject(projectid, taskid);
+        return ResponseStatus.class.getSimpleName();
+    }
 
+    @RequestMapping(value = "/createWFTask/{projectid}", method = RequestMethod.POST)
+    public Task createWFTask(@ModelAttribute TaskWF task, @PathVariable String projectid, Model model) {
+        Task dbTask = appHandler.addTaskToProject(task, projectid);
+        return dbTask;
+    }
 
-
-
-
-
-
+    @RequestMapping(value = "/deleteWFTask/{projectid}", method = RequestMethod.POST)
+    public String createWFTask(@PathVariable String projectid, @PathVariable String taskid, Model model) {
+        appHandler.deleteTaskFromProject(projectid, taskid);
+        return ResponseStatus.class.getSimpleName();
+    }
 }

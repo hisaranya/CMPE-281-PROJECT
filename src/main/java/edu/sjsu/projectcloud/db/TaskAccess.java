@@ -45,4 +45,20 @@ public class TaskAccess {
         }
         return task;
     }
+
+    public void deleteTask(String taskid) {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations != null) {
+            mongoOperations.findAndRemove(query(where("_id").is(taskid)), Task.class);
+        }
+    }
+
+    public Task updateTask(Task task) {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations != null) {
+            mongoOperations.findAndRemove(query(where("_id").is(task.getId())), Task.class);
+            mongoOperations.insert(task, "task");
+        }
+        return task;
+    }
 }

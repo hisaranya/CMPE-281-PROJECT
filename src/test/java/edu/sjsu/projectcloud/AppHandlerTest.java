@@ -1,5 +1,6 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,9 +22,36 @@ public class AppHandlerTest {
     public void testAddStoryToSprint() throws Exception {
         AppHandler appHandler = new AppHandler();
         String taskName = "DummyTask2";
-        String projectid = "554597c977c846b675a270cc";
-        String sprintid = "554597d377c846b675a270cd";
+        String projectid = "5545c12677c8a107cae8903f";
+        String sprintid = "5545c13877c8a107cae89040";
         TaskScrum taskScrum = new TaskScrum("In progress", taskName, "Dummy Task 2", "ABC", 50, 10);
         appHandler.addStoryToSprint(taskScrum, projectid, sprintid);
+    }
+
+
+    @Test
+    public void testDeleteStoryFromSprint() throws Exception {
+        AppHandler appHandler = new AppHandler();
+        String projectid = "5545c12677c8a107cae8903f";
+        String sprintid = "5545c13877c8a107cae89040";
+        String storyid = "5545c22577c8ebe9f027f4c5";
+        System.out.println(appHandler.deleteStoryFromSprint(projectid, sprintid, storyid));
+    }
+
+    @Test
+    public void testAddTaskKanbanToProject() throws Exception {
+        AppHandler appHandler = new AppHandler();
+        String projectid = "5545d26177c8dd1924c84783";
+        String taskName = "DummyKanban2s";
+        TaskKanban taskKanban = new TaskKanban("In progress", taskName, "Dummy Task 2 Kanban", "ABC");
+        appHandler.addTaskToProject(taskKanban, projectid);
+    }
+
+    @Test
+    public void testDeleteTaskFromProject() throws Exception {
+        AppHandler appHandler = new AppHandler();
+        String projectid = "5545d26177c8dd1924c84783";
+        String taskid = "554650dd77c86cc4fc3bfca1";
+        appHandler.deleteTaskFromProject(projectid, taskid);
     }
 }

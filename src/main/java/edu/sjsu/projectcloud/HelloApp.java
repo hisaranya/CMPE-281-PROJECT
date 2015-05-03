@@ -135,7 +135,7 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         if (project.getProjecttype().equals("SCRUM")) {
             Sprint sprint = new Sprint();
             model.addAttribute(sprint);
-            return "createSprint";
+            return "createsprint";
         } else {
             model.addAttribute("task", task1);
             return task1.getClass().getSimpleName();
@@ -155,19 +155,19 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         return "TaskScrum";
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //super.addResourceHandlers(registry);
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-        for(URL url: urls){
-            System.out.println(url.getFile());
-        }
-
-        registry.addResourceHandler("/js/**")
-                .addResourceLocations("classpath:/js/");
-
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        super.addResourceHandlers(registry);
+//        ClassLoader cl = ClassLoader.getSystemClassLoader();
+//        URL[] urls = ((URLClassLoader)cl).getURLs();
+//
+//        for(URL url: urls){
+//            System.out.println(url.getFile());
+//        }
+//
+//        registry.addResourceHandler("/js/**")
+//                .addResourceLocations("classpath:/js/");
+//
+//    }
 }
 
