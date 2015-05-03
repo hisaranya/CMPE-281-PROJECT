@@ -1,24 +1,24 @@
 package edu.sjsu.projectcloud.db;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
+import edu.sjsu.projectcloud.sprint.Sprint;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.core.query.*;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.data.mongodb.core.query.Query;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-import javax.management.Query;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Created by mallika on 5/1/15.
@@ -104,5 +104,15 @@ public class ResourceAccess {
         Resource resource = mongoOperations.findOne(query(where("_id").is(userid)), Resource.class);
         List<Project> projects = resource.getProjects();
         return projects;
+    }
+
+    public void addProjectToResource(Project project, String userid) throws NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Query query = new Query(where("_id").is(userid));
+        Update update = new Update().push("projects", project);
+        mongoOperations.updateFirst(query, update, Resource.class);
     }
 }

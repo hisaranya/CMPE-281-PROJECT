@@ -31,10 +31,9 @@ public class ProjectAccess {
     }
 
     public Project insertProject(Project project) {
-        Project dbProject = null;
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations != null) {
-            mongoOperations.insert(project);
+            mongoOperations.insert(project, "project");
         }
         return project;
     }

@@ -1,5 +1,7 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.project.Project;
+import edu.sjsu.projectcloud.project.ProjectWF;
 import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import org.junit.Test;
@@ -53,5 +55,13 @@ public class AppHandlerTest {
         String projectid = "5545d26177c8dd1924c84783";
         String taskid = "554650dd77c86cc4fc3bfca1";
         appHandler.deleteTaskFromProject(projectid, taskid);
+    }
+
+    @Test
+    public void testInsertProjectAndAddToResource() throws Exception {
+        Project project = new ProjectWF("KANBAN", "TESTKANBAN1", "05/01/2015", "05/31/2015", "m");
+        String userid = "5545c11977c8a107cae8903e";
+        AppHandler appHandler = new AppHandler();
+        appHandler.insertProjectAndAddToResource(userid, project);
     }
 }
