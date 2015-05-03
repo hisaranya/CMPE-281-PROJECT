@@ -42,19 +42,6 @@ public class RestController {
         }
     }
 
-    @RequestMapping(value = "/getAllStoriesForJTable", method = RequestMethod.POST)
-    public JTableResult getAllSprintsForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
-        JTableResult<TaskScrum> result = new JTableResult<>();
-        result.setResult("OK");
-
-        for (int i=64; i < 64 + 20; i++) {
-            TaskScrum task = new TaskScrum("Status", Character.toString((char) i) +" Task Name", "Description", "resource name", 1, 10);
-            task.setId(i+"");
-            result.addRecord(task);
-        }
-        return result;
-    }
-
     @RequestMapping(value = "/ProjectStatus", method = RequestMethod.GET)
     public List<Sprint> getProjectStatus(@RequestParam(value = "projectId", required = true) String projectId) {
         // get sprints and return the list of sprints here
@@ -192,7 +179,8 @@ public class RestController {
 
     @RequestMapping(value = "getAllSprints/{projectid}", method = RequestMethod.GET)
     public List<Sprint> getAllSprints(@PathVariable String projectid, Model model) {
-        List<Sprint> sprints = appHandler.getAllSprintsForProject(projectid);
+        //List<Sprint> sprints = appHandler.getAllSprintsForProject(projectid);
+        List<Sprint> sprints = null;
         return sprints;
     }
 }

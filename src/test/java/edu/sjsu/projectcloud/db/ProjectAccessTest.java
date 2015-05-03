@@ -32,6 +32,6 @@ public class ProjectAccessTest {
         SprintAccess sprintAccess = new SprintAccess();
         ProjectAccess projectAccess = new ProjectAccess();
         Sprint sprint = sprintAccess.updateSprintAddTask(sprintid, taskScrum);
-        projectAccess.updateProjectAddStoryToSprint(projectid, sprint, taskScrum);
+        //projectAccess.updateProjectAddStoryToSprint(projectid, sprint, taskScrum);
     }
 }

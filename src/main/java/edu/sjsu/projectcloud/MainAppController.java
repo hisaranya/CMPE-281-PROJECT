@@ -84,4 +84,25 @@ public class MainAppController {
         model.addAttribute("project", projectInfo);
         return "JTableTest";
     }
+
+    @RequestMapping(value = "/project/{projectId}/sprint/{sprintId}/stories", method = RequestMethod.GET)
+    public String manageStoriesForProjectSprint(Model model,
+                                  @PathVariable("projectId") String projectId,
+                                  @PathVariable("sprintId") String sprintId) {
+
+        AppHandler appHandler = new AppHandler();
+
+        Project project = appHandler.getProject(projectId);
+        Sprint sprint = new Sprint(sprintId);
+        addAllModelData(model, project, sprint);
+
+        return "manageStoriesForProjectSprint";
+    }
+
+        private void addAllModelData(Model m, Project p, Sprint s) {
+        m.addAttribute("project", p);
+        m.addAttribute("sprint", s);
+        m.addAttribute("userSessionInfo", userSessionInfo);
+
+    }
 }
