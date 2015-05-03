@@ -20,6 +20,8 @@ public class ScrumJTableRESTController {
 
     @RequestMapping(value="/createStory", method=RequestMethod.POST)
     public JTableResult<? extends Task> createStory(@ModelAttribute TaskScrum story, Model model) {
+        // TODO actually create the entry from MongoDB
+
         story.setId("-1");
 
         JTableResult<TaskScrum> result = new JTableResult<>();
@@ -29,7 +31,27 @@ public class ScrumJTableRESTController {
         return result;
     }
 
+    @RequestMapping(value="/updateStory", method=RequestMethod.POST)
+    public JTableResult<? extends Task> updateStory(@ModelAttribute TaskScrum story, Model model) {
+        // TODO actually update the entry from MongoDB
 
+        story.setId("-1");
+
+        JTableResult<TaskScrum> result = new JTableResult<>();
+        result.setResult("OK");
+        result.addRecord(story);
+        System.out.println(story);
+        return result;
+    }
+
+    @RequestMapping(value="/deleteStory", method=RequestMethod.POST)
+    public JTableResult<? extends Task> deleteStory(@ModelAttribute TaskScrum story, Model model) {
+        // TODO actually delete the entry from MongoDB
+
+
+        System.out.println("Delete for story id = " + story.getId());
+        return new JTableResult<>();
+    }
 
 
 }

@@ -24,8 +24,8 @@
             actions: {
                 listAction: '/cmpe281project/api/getAllStoriesForJTable?projectId=1',
                 createAction: '/cmpe281project/api/scrum/createStory?projectId=1',
-                updateAction: 'PersonActions.php?action=update',
-                deleteAction: 'PersonActions.php?action=delete'
+                updateAction: '/cmpe281project/api/scrum/updateStory?projectId=1',
+                deleteAction: '/cmpe281project/api/scrum/deleteStory?projectId=1'
             },
             fields: {
                 id: {
@@ -44,9 +44,7 @@
                 },
                 taskDescription: {
                     title: 'Description',
-                    width: '10%',
-                    create: false,
-                    edit: false
+                    width: '10%'
                 },
                 resourceName: {
                     title: 'Resource Name',

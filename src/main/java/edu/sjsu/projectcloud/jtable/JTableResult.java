@@ -9,7 +9,7 @@ import java.util.List;
 
 public class JTableResult<T> {
     @JsonProperty("Result")
-    private String result = "";
+    private String result = "OK";
 
     @JsonProperty("Records")
     @JsonInclude(JsonInclude.Include.NON_NULL)
