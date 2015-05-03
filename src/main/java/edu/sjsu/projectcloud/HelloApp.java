@@ -25,8 +25,13 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +40,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/cmpe281project")
 @ComponentScan
-public class HelloApp {
+@EnableWebMvc
+public class HelloApp extends WebMvcConfigurerAdapter {
     @Autowired
     UserSessionInfo userSessionInfo;
 
@@ -147,6 +153,21 @@ public class HelloApp {
         model.addAttribute("sprintName", sprint.getSprintName());
         model.addAttribute("userSessionInfo", userSessionInfo);
         return "TaskScrum";
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //super.addResourceHandlers(registry);
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+        for(URL url: urls){
+            System.out.println(url.getFile());
+        }
+
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/js/");
+
     }
 }
 
