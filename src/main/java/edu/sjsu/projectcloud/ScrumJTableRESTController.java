@@ -20,7 +20,7 @@ public class ScrumJTableRESTController {
 
     @RequestMapping(value="/createStory", method=RequestMethod.POST)
     public JTableResult<? extends Task> createStory(@ModelAttribute TaskScrum story, Model model) {
-        story.setId("1234");
+        story.setId("-1");
 
         JTableResult<TaskScrum> result = new JTableResult<>();
         result.setResult("OK");

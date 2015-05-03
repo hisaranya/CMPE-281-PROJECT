@@ -19,9 +19,11 @@
         //Prepare jTable
         $('#PeopleTableContainer').jtable({
             title: 'Scrum Stories',
+            defaultSorting: 'taskName DESC',
+            sorting: true,
             actions: {
                 listAction: '/cmpe281project/api/getAllStoriesForJTable?projectId=1',
-                createAction: 'PersonActions.php?action=create',
+                createAction: '/cmpe281project/api/scrum/createStory?projectId=1',
                 updateAction: 'PersonActions.php?action=update',
                 deleteAction: 'PersonActions.php?action=delete'
             },
@@ -29,7 +31,7 @@
                 id: {
                     title: 'TaskId',
                     key: true,
-                    list: false
+                    list: true
                 },
                 status: {
                     title: 'Status',
@@ -37,7 +39,8 @@
                 },
                 taskName: {
                     title: 'Name',
-                    width: '10%'
+                    width: '10%',
+                    sorting: true
                 },
                 taskDescription: {
                     title: 'Description',
