@@ -208,7 +208,7 @@ public class AppHandler {
         }
         return stories;
     }
-    /*
+
 
     public List<Sprint> getAllSprintsForProject(String projectid) {
         List<Sprint> sprints = new ArrayList<>();
@@ -219,6 +219,6 @@ public class AppHandler {
         }
         return sprints;
     }
-    */
+
 
 }

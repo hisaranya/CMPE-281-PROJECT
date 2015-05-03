@@ -149,14 +149,16 @@ public class ProjectAccess {
         Update update = new Update().pull("tasks", new BasicDBObject("_id", taskid));
         mongoOperations.updateFirst(query, update, Project.class);
     }
-    /*
-    public List<Sprint> getSprints(String projectid) {
+
+    public List<Sprint> getSprints(String projectid) throws NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
-        mongoOperations.findOne(where())
+        ProjectScrum project = (ProjectScrum) mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
+        List<Sprint> sprints = project.getSprints();
+        return sprints;
     }
-    */
+
 
 }
