@@ -35,7 +35,7 @@ public class AppHandlerTest {
         String projectid = "5545c12677c8a107cae8903f";
         String sprintid = "5545c13877c8a107cae89040";
         String storyid = "5545c22577c8ebe9f027f4c5";
-        System.out.println(appHandler.deleteStoryFromSprint(projectid, sprintid, storyid));
+        appHandler.deleteStoryFromSprint(projectid, sprintid, storyid);
     }
 
     @Test
