@@ -1,5 +1,6 @@
 package edu.sjsu.projectcloud.jtable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -7,17 +8,21 @@ import java.util.List;
 
 
 public class JTableResult<T> {
-
     @JsonProperty("Result")
     private String result = "";
 
     @JsonProperty("Records")
-    private List<T> records = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<T> records = null;
 
-    @JsonProperty("TotalRecordCount")
-    public int getTotalRecordCount() {
-        return records.size();
-    }
+    @JsonProperty("Record")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private T record = null;
+
+//    @JsonProperty("TotalRecordCount")
+//    public int getTotalRecordCount() {
+//        return records.size();
+//    }
 
     public String getResult() {
         return result;
@@ -32,7 +37,16 @@ public class JTableResult<T> {
     }
 
     public void addRecord(T rec) {
-        records.add(rec);
+        if (record == null && records == null) {
+            record = rec;
+        } else {
+            if (records == null) {
+                records = new ArrayList<>();
+                records.add(record);
+                record = null;
+            }
+            records.add(rec);
+        }
     }
 
 }

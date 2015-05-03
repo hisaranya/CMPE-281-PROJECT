@@ -39,4 +39,12 @@ public class TaskScrum extends Task {
     public void setHoursCompleted(int hoursCompleted) {
         this.hoursCompleted = hoursCompleted;
     }
+
+    @Override
+    public String toString() {
+        return "TaskScrum{" +
+                "hoursAllotted=" + hoursAllotted +
+                ", hoursCompleted=" + hoursCompleted +
+                '}';
+    }
 }
