@@ -39,4 +39,5 @@ public class TaskWF extends Task {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
 }
