@@ -15,15 +15,15 @@ import java.util.List;
  * Created by preetikrishnan on 5/3/15.
  */
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("cmpe281project/api/WF")
-public class WFJtableRESTController {
+@RequestMapping("cmpe281project/api/kanban")
+public class CardJTableRESTController {
 
     @Autowired
     UserSessionInfo userSessionInfo;
     private TaskWF tasks;
 
-    @RequestMapping(value = "/listTasks", method = RequestMethod.POST)
-    public  @ResponseBody JTableResult getAllTasksForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
+    @RequestMapping(value = "/listCards", method = RequestMethod.POST)
+    public JTableResult getAllTasksForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
         JTableResult<Task> result = new JTableResult<>(true);
         result.setResult("OK");
 
@@ -36,10 +36,10 @@ public class WFJtableRESTController {
         return result;
     }
 
-    @RequestMapping(value="/createTask", method=RequestMethod.POST)
+    @RequestMapping(value="/createCard", method=RequestMethod.POST)
     public JTableResult<? extends Task> createTask(@ModelAttribute TaskWF tasks,
-                                                    @RequestParam("projectId") String projectId,
-                                                    Model model) {
+                                                   @RequestParam("projectId") String projectId,
+                                                   Model model) {
         AppHandler appHandler = new AppHandler();
         tasks.setId(null);
         appHandler.addTaskToProject(tasks, projectId);
@@ -51,10 +51,10 @@ public class WFJtableRESTController {
         return result;
     }
 
-    @RequestMapping(value="/updateTask", method=RequestMethod.POST)
+    @RequestMapping(value="/updateCard", method=RequestMethod.POST)
     public JTableResult<? extends Task> updateTaskInProject(@ModelAttribute TaskWF tasks,
-                                                    @RequestParam("projectId") String projectId,
-                                                    Model model) {
+                                                            @RequestParam("projectId") String projectId,
+                                                            Model model) {
         AppHandler appHandler = new AppHandler();
         appHandler.updateTaskInProject(tasks, projectId);
 
@@ -65,10 +65,10 @@ public class WFJtableRESTController {
         return result;
     }
 
-    @RequestMapping(value="/deleteTask", method=RequestMethod.POST)
+    @RequestMapping(value="/deleteCard", method=RequestMethod.POST)
     public JTableResult<? extends Task> deleteTaskFromProject(@ModelAttribute TaskWF tasks,
-                                                    @RequestParam("projectId") String projectId,
-                                                    Model model) {
+                                                              @RequestParam("projectId") String projectId,
+                                                              Model model) {
         AppHandler appHandler = new AppHandler();
         appHandler.deleteTaskFromProject(projectId, tasks.getId());
         return new JTableResult<>();

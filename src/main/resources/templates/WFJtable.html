@@ -29,7 +29,7 @@
                 listAction: '/cmpe281project/api/WF/listTasks?projectId=' + $('#projectId').val(),
                 createAction: '/cmpe281project/api/WF/createTask?projectId='  + $('#projectId').val(),
                 updateAction: '/cmpe281project/api/WF/updateTask?projectId='  + $('#projectId').val(),
-                deleteAction: '/cmpe281project/api/WF/deleteTask?projectId=' +  + $('#projectId').val()
+                deleteAction: '/cmpe281project/api/WF/deleteTask?projectId=' +  $('#projectId').val()
             },
             fields: {
                 id: {
@@ -56,11 +56,15 @@
                 },
                 startDate: {
                     title: 'Start Date',
-                    width: '30%'
+                    width: '30%',
+                    type: 'date',
+                    displayFormat: 'mm/dd/yy'
                 },
                 endDate: {
                     title: 'End Date',
-                    width: '30%'
+                    width: '30%',
+                    type: 'date',
+                    displayFormat: 'mm/dd/yy'
                 }
             },
                 recordsLoaded: function(event, data) {

@@ -113,4 +113,23 @@ public class MainAppController {
         model.addAttribute("project", project);
         return "WFJtable";
     }
+
+
+
+    @RequestMapping(value = "/project/{projectId}/cards", method = RequestMethod.GET)
+    public String viewCardsList(Model model, @PathVariable("projectId") String projectId) {
+        model.addAttribute("userSessionInfo", userSessionInfo);
+
+
+        AppHandler appHandler = new AppHandler();
+
+        Project project = appHandler.getProject(projectId);
+        model.addAttribute("project", project);
+        return "CardJTableRESTController";
+    }
+
+
+
+
+
 }

@@ -1,12 +1,19 @@
 package edu.sjsu.projectcloud.task;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
  * Created by mallika on 4/30/15.
  */
 public class TaskWF extends Task {
+
+    @JsonFormat(pattern="yyyy-MM-dd")
     protected Date startDate;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
     protected Date endDate;
 
     public TaskWF() {}
@@ -39,4 +46,5 @@ public class TaskWF extends Task {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
 }
