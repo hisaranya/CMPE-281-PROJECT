@@ -19,10 +19,20 @@ public class JTableResult<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T record = null;
 
+    private boolean forceArray = false;
+
 //    @JsonProperty("TotalRecordCount")
 //    public int getTotalRecordCount() {
 //        return records.size();
 //    }
+
+    public JTableResult(boolean forceArray) {
+        this.forceArray = forceArray;
+    }
+
+    public JTableResult() {
+        this(false);
+    }
 
     public String getResult() {
         return result;
@@ -37,12 +47,14 @@ public class JTableResult<T> {
     }
 
     public void addRecord(T rec) {
-        if (record == null && records == null) {
+        if (record == null && records == null && forceArray == false) {
             record = rec;
         } else {
             if (records == null) {
                 records = new ArrayList<>();
-                records.add(record);
+                if (forceArray == false) {
+                    records.add(record);
+                }
                 record = null;
             }
             records.add(rec);

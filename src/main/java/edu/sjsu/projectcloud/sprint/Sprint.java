@@ -18,6 +18,9 @@ public class Sprint {
     protected String endDate;
     protected List<Task> tasks = new ArrayList<>();
 
+    public Sprint(String sId) {
+        this.id = sId;
+    }
 
     public Sprint(String sprintName, String startDate, String endDate) {
         this.sprintName = sprintName;

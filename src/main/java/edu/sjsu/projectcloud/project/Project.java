@@ -34,6 +34,10 @@ public class Project {
 
     public Project() {}
 
+    public Project(String pId) {
+        this.id = pId;
+    }
+
     public String getId() {
         return id;
     }

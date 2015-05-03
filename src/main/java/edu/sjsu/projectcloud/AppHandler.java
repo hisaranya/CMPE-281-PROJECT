@@ -239,6 +239,4 @@ public class AppHandler {
         }
         return projects;
     }
-
-
 }

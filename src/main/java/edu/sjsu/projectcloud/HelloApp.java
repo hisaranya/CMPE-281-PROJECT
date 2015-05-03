@@ -155,19 +155,19 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         return "TaskScrum";
     }
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        super.addResourceHandlers(registry);
-//        ClassLoader cl = ClassLoader.getSystemClassLoader();
-//        URL[] urls = ((URLClassLoader)cl).getURLs();
-//
-//        for(URL url: urls){
-//            System.out.println(url.getFile());
-//        }
-//
-//        registry.addResourceHandler("/js/**")
-//                .addResourceLocations("classpath:/js/");
-//
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+        for(URL url: urls){
+            System.out.println(url.getFile());
+        }
+
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/js/");
+
+    }
 }
 

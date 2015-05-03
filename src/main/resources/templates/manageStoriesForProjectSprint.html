@@ -17,19 +17,20 @@
 <input type="hidden" id="userId" th:value="${userSessionInfo.getId()}" />
 <input type="hidden" id="sprintId" th:value="${sprint.getId()}" />
 
+<h1>Manage stories for project <span th:text="${project.getProjectname()}"></span> and sprint <span th:text="${sprint.getId()}" /></h1>
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
     $(document).ready(function () {
         //Prepare jTable
         $('#JTableContainer').jtable({
             title: 'Scrum Stories',
-            defaultSorting: 'taskName DESC',
+            defaultSorting: 'id DESC',
             sorting: true,
             actions: {
-                listAction: '/cmpe281project/api/getAllStoriesForJTable?projectId=' + $('#projectId').val(),
-                createAction: '/cmpe281project/api/scrum/createStory?projectId=' + $('#projectId').val(),
-                updateAction: '/cmpe281project/api/scrum/updateStory?projectId=' + $('#projectId').val(),
-                deleteAction: '/cmpe281project/api/scrum/deleteStory?projectId=' + $('#projectId').val()
+                listAction: '/cmpe281project/api/scrum/listStories?projectId=' + $('#projectId').val() + '\u0026sprintId=' + $('#sprintId').val(),
+                createAction: '/cmpe281project/api/scrum/createStory?projectId='  + $('#projectId').val() + '\u0026sprintId=' + $('#sprintId').val(),
+                updateAction: '/cmpe281project/api/scrum/updateStory?projectId='  + $('#projectId').val() + '\u0026sprintId=' + $('#sprintId').val(),
+                deleteAction: '/cmpe281project/api/scrum/deleteStory?projectId=' +  + $('#projectId').val() + '\u0026sprintId=' + $('#sprintId').val()
             },
             fields: {
                 id: {
@@ -71,11 +72,7 @@
             }
         });
 
-        //Load person list from server
         $('#JTableContainer').jtable('load');
-
-        alert($('#userId').val() + ' ' + $('#projectId').val());
-
     });
 
 </script>
