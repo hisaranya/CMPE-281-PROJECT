@@ -102,8 +102,6 @@ public class HelloApp {
         }
     }
 
-
-
     private DAO getDAO(String type) {
         return DAOFactory.getInstance(type);
     }
@@ -120,12 +118,11 @@ public class HelloApp {
         if (appHandler.doesProjectExistInResource(project.getOwnername(), project) != null) {
             return "login";
         }
-        System.out.println(project.getOwnername());
-        appHandler.insertProject(project);
-        appHandler.updateResourceAddProject(project.getOwnername(), project);
+        Project dbProject = appHandler.insertProject(project);
+        appHandler.updateResourceAddProject(dbProject.getOwnername(), dbProject);
         DAO dao = this.getDAO(project.getProjecttype());
         Task task1 = dao.getTask();
-        model.addAttribute("projectname", project.getProjectname());
+        model.addAttribute("project", dbProject);
         model.addAttribute("username", project.getOwnername());
         model.addAttribute("userSessionInfo", userSessionInfo);
 
@@ -139,124 +136,17 @@ public class HelloApp {
         }
     }
 
-    @RequestMapping(value = "/sprint/{username}/{projectname}", method = RequestMethod.POST)
-    public String createSprint(@ModelAttribute Sprint sprint, @PathVariable String username, @PathVariable String projectname, Model model) {
+    @RequestMapping(value = "/sprint/{username}/{projectid}", method = RequestMethod.POST)
+    public String createSprint(@ModelAttribute Sprint sprint, @PathVariable String username, @PathVariable String projectid, Model model) {
         Task taskScrum = new TaskScrum();
+        Sprint dbSprint = appHandler.insertSprint(sprint, projectid);
+        appHandler.updateProjectAddSprint(projectid, sprint);
         model.addAttribute("task", taskScrum);
         model.addAttribute("username", username);
-        model.addAttribute("projectname", projectname);
+        model.addAttribute("projectid", projectid);
         model.addAttribute("sprintName", sprint.getSprintName());
         model.addAttribute("userSessionInfo", userSessionInfo);
         return "TaskScrum";
     }
 }
 
-
-/*
-
-
-//for success or failure on login
-
-    @RequestMapping(value = "/loginresult", method = RequestMethod.POST)
-
-    public ModelAndView giveLoginResult (@RequestParam("username") String username,
-
-                                         @RequestParam("password") String password)
-
-    {
-
-        ModelAndView mv = new ModelAndView();
-
-
-        MongoDBConnection authObj = new MongoDBConnection();
-
-        if(authObj.mongoAuthentication(username, password))
-
-        {
-
-
-            mv.addObject("message", "Successful Authentication");
-
-            mv.setViewName("success");
-
-
-        }
-
-        else
-
-        {
-
-
-            mv.addObject("message", "Failed Authentication");
-
-            mv.setViewName("success");
-
-        }
-
-
-        return mv;
-
-    }
-
-
-
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-
-    public ModelAndView giveLogin()
-
-    {
-
-        ModelAndView mv = new ModelAndView("login");
-
-        return mv;
-
-    }
-
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-
-    public ModelAndView showregister()
-
-    {
-
-        ModelAndView mv = new ModelAndView("register");
-
-        return mv;
-
-    }
-
-
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-
-    public ModelAndView registerUser (@RequestParam("username") String username,
-
-                                      @RequestParam("password") String password)
-
-    {
-
-        ModelAndView mv = new ModelAndView();
-
-
-        User user = new User(username, password);
-
-
-        MongoDBConnection authObj = new MongoDBConnection();
-
-        authObj.addUser(user);
-
-        mv.addObject("message", "Successful Registration");
-
-        mv.setViewName("success");
-
-        return mv;
-
-    }
-
-}
-
-
-Click here to Reply or Forward
-}
-
-*/

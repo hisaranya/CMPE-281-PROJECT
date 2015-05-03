@@ -51,8 +51,8 @@ public class RestController {
         return "success";
     }
 
-    @RequestMapping(value = "/test/dummyproject/{projectid}", method = RequestMethod.POST)
-    public Project returnDummyProjectPOJO(@PathVariable String projectid, @PathVariable String userid) {
+    @RequestMapping(value = "/test/dummyproject/{projectid}", method = RequestMethod.GET)
+    public Project returnDummyProjectPOJO(@PathVariable String projectid) {
         Project project = setUpDummyProject(projectid);
         return project;
     }
@@ -67,7 +67,9 @@ public class RestController {
     private List<Sprint> setupDummySprints() {
         List<Sprint> sprints = new ArrayList<>();
         Sprint sprint1 = new Sprint("DummySprint1", "05/02/2015", "05/09/2015");
+        sprint1.setId("1234");
         Sprint sprint2 = new Sprint("DummySprint2", "05/09/2015", "05/16/2015");
+        sprint2.setId("5678");
         sprint1 = addStories(sprint1);
         sprint2 = addStories(sprint2);
         sprints.add(sprint1);
@@ -78,9 +80,15 @@ public class RestController {
     private Sprint addStories(Sprint sprint) {
         String taskName = sprint.getSprintName()+"DummyTask1";
         TaskScrum taskScrum = new TaskScrum("In progress", taskName, "Dummy Task 1", "XYZ", 50, 10);
+        taskScrum.setId("1234");
         sprint.addTask(taskScrum);
         return sprint;
     }
+
+
+
+
+
 
 
 

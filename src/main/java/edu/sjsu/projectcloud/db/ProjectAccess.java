@@ -27,13 +27,14 @@ public class ProjectAccess {
         return mongoOperations;
     }
 
-    public boolean insertProject(Project project) {
+    public Project insertProject(Project project) {
+        Project dbProject = null;
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations != null) {
             mongoOperations.insert(project);
-            return true;
+             dbProject = mongoOperations.findOne(query(where("projectname").is(project.getProjectname()).and("ownername").is(project.getOwnername())), Project.class);
         }
-        return false;
+        return dbProject;
     }
 
     public Sprint findSprintinProject(String username, String projectName, String projectType, String sprintName) throws  NullMongoTemplateException{
@@ -66,12 +67,12 @@ public class ProjectAccess {
         mongoOperations.updateFirst(query(where("projectname").is(projectname).and("ownername").is(username)), new Update().push("tasks", task), Resource.class);
     }
 
-    public void updateProjectAddSprint(String projectname, String username, Sprint sprint) throws NullMongoTemplateException {
+    public void updateProjectAddSprint(String projectid, Sprint sprint) throws NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
-        mongoOperations.updateFirst(query(where("projectname").is(projectname).and("ownername").is(username)), new Update().push("sprints", sprint), Resource.class);
+        mongoOperations.updateFirst(query(where("_id").is(projectid)), new Update().push("sprints", sprint), Project.class);
     }
 
     private MongoOperations getMongoOperationInstance() {

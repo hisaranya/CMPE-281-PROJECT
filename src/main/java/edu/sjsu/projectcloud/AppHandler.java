@@ -3,6 +3,7 @@ package edu.sjsu.projectcloud;
 import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
+import edu.sjsu.projectcloud.db.SprintAccess;
 import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
 import edu.sjsu.projectcloud.exceptions.NoSuchUserException;
 import edu.sjsu.projectcloud.project.Project;
@@ -17,6 +18,7 @@ import edu.sjsu.projectcloud.sprint.Sprint;
 public class AppHandler {
     ResourceAccess resourceAccess = new ResourceAccess();
     ProjectAccess projectAccess = new ProjectAccess();
+    SprintAccess sprintAccess = new SprintAccess();
 
     public User validateAndGetUser(String username, String password) throws NoSuchUserException, InvalidLoginException {
         User u = new User();
@@ -55,8 +57,9 @@ public class AppHandler {
         resourceAccess.insertResource(resource);
     }
 
-    public void insertProject(Project project) {
-        projectAccess.insertProject(project);
+    public Project insertProject(Project project) {
+        Project dbProject = projectAccess.insertProject(project);
+        return dbProject;
     }
 
     public boolean validateUsernamePassword(String username, String password) {
@@ -99,5 +102,22 @@ public class AppHandler {
         }
         return newSprint;
     }
+
+    public Sprint insertSprint(Sprint sprint, String projectid) {
+        Sprint dbSprint = sprintAccess.insertSprint(sprint);
+        return dbSprint;
+    }
+
+    public boolean updateProjectAddSprint(String projectid, Sprint sprint) {
+        try {
+            projectAccess.updateProjectAddSprint(projectid, sprint);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+            return false;
+        }
+        return true;
+    }
+
+
 
 }

@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.Update;
-
 import java.net.UnknownHostException;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -25,13 +24,22 @@ public class SprintAccess {
         return mongoOperations;
     }
 
-    public boolean insertSprint(Sprint sprint) {
+    public Sprint insertSprint(Sprint sprint) {
+        Sprint dbSprint = null;
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations != null) {
+            Sprint existSprint = mongoOperations.findOne(query(where("sprintName").is(sprint.getSprintName()).
+                    and("startDate").is(sprint.getStartDate()).and("endDate").is(sprint.getEndDate())), Sprint.class);
             mongoOperations.insert(sprint);
-            return true;
+            if (existSprint != null) {
+                dbSprint = mongoOperations.findOne(query(where("sprintName").is(sprint.getSprintName()).
+                        and("startDate").is(sprint.getStartDate()).and("endDate").is(sprint.getEndDate()).and("_id").ne(existSprint.getId())), Sprint.class);
+            } else {
+                dbSprint = mongoOperations.findOne(query(where("sprintName").is(sprint.getSprintName()).
+                        and("startDate").is(sprint.getStartDate()).and("endDate").is(sprint.getEndDate())), Sprint.class);
+            }
         }
-        return false;
+        return dbSprint;
     }
 
     private MongoOperations getMongoOperationInstance() {

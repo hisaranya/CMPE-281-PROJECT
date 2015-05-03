@@ -73,7 +73,7 @@
     <p th:text="'Hello, ' + ${username}"/>
 
     <form action="#" name="myForm" onsubmit="return validateSprint()"
-          th:action="@{/cmpe281project/sprint/__${username}__/__${projectname}__}"
+          th:action="@{/cmpe281project/sprint/__${username}__/__${project.id}__}"
           th:object="${sprint}" method="post">
 
         <div class="body bg-gray">
