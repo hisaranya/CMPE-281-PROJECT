@@ -165,9 +165,18 @@ public class ProjectAccess {
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
-
         Project project = mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
         List<Task> tasks = project.getTasks();
         return tasks;
+    }
+
+    public void getProjectStatus(String projectid) throws  NullMongoTemplateException {
+        MongoOperations mongoOperations = getMongoOperationInstance();
+        if (mongoOperations == null) {
+            throw new NullMongoTemplateException();
+        }
+        Project project = mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
+        String projectType = project.getProjecttype();
+
     }
 }

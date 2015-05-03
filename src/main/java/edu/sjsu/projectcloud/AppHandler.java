@@ -182,7 +182,7 @@ public class AppHandler {
     public Task updateTaskInProject(Task task, String projectid) {
         Task dbTask = taskAccess.updateTask(task);
         try {
-            projectAccess.updateProjectAddTaskToProject(task, projectid);
+            projectAccess.updateProjectUpdateTaskInProject(task, projectid);
         } catch (NullMongoTemplateException nmte) {
             System.out.println("Mongo Connection failed");
             return null;
@@ -248,5 +248,13 @@ public class AppHandler {
             System.out.println("Mongo Connection failed");
         }
         return project;
+    }
+
+    public void getProjectStatus(String projectid) throws NullMongoTemplateException {
+        try {
+            projectAccess.getProjectStatus(projectid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
     }
 }

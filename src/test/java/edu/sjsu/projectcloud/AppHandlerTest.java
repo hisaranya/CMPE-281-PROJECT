@@ -64,4 +64,12 @@ public class AppHandlerTest {
         AppHandler appHandler = new AppHandler();
         appHandler.insertProjectAndAddToResource(userid, project);
     }
+
+    @Test
+    public void testUpdateTaskInProject() throws Exception {
+        TaskKanban taskKanban = new TaskKanban("In progress", "DummyKanbanUpdated", "Dummy Task 2 Kanban Updated", "ABC");
+        taskKanban.setId("5546564777c851169492287d");
+        AppHandler appHandler = new AppHandler();
+        appHandler.updateTaskInProject(taskKanban, "5545d26177c8dd1924c84783");
+    }
 }
