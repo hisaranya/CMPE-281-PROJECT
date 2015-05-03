@@ -34,6 +34,23 @@ public class ScrumJTableRESTController {
         return result;
     }
 
+    @RequestMapping(value = "/listSprints", method = RequestMethod.POST)
+    public JTableResult getAllSprintsForJTable(@RequestParam(value = "projectId", required = true) String projectId
+                                              ) {
+        JTableResult<Sprint> result = new JTableResult<>(true);
+        result.setResult("OK");
+
+        AppHandler appHandler = new AppHandler();
+        List<Sprint> sprints = appHandler.getAllSprintsForProject(projectId);
+
+        for (Sprint t : sprints) {
+            result.addRecord(t);
+        }
+        return result;
+    }
+
+
+
     @RequestMapping(value="/createStory", method=RequestMethod.POST)
     public JTableResult<? extends Task> createStory(@ModelAttribute TaskScrum story,
                                                     @RequestParam("projectId") String projectId,
@@ -47,6 +64,21 @@ public class ScrumJTableRESTController {
         result.setResult("OK");
         result.addRecord(story);
         System.out.println(story);
+        return result;
+    }
+
+    @RequestMapping(value="/createSprint", method=RequestMethod.POST)
+    public JTableResult<? extends Sprint> insertSprint(@ModelAttribute Sprint sprint,
+                                                       @RequestParam("projectId") String projectId,
+                                                       Model model) {
+        AppHandler appHandler = new AppHandler();
+        sprint.setId(null);
+        appHandler.insertSprint(sprint, projectId);
+
+        JTableResult<Sprint> result = new JTableResult<>();
+        result.setResult("OK");
+        result.addRecord(sprint);
+        System.out.println(sprint);
         return result;
     }
 
@@ -65,6 +97,21 @@ public class ScrumJTableRESTController {
         return result;
     }
 
+
+    @RequestMapping(value="/updateSprint", method=RequestMethod.POST)
+    public JTableResult<? extends Sprint> updateSprint(@ModelAttribute Sprint sprint,
+                                                    @RequestParam("projectId") String projectId,
+                                                    Model model) {
+        AppHandler appHandler = new AppHandler();
+        appHandler.updateProjectAddSprint( projectId, sprint );
+
+        JTableResult<Sprint> result = new JTableResult<>();
+        result.setResult("OK");
+        result.addRecord(sprint);
+        System.out.println(sprint);
+        return  result;
+    }
+    
     @RequestMapping(value="/deleteStory", method=RequestMethod.POST)
     public JTableResult<? extends Task> deleteStory(@ModelAttribute TaskScrum story,
                                                     @RequestParam("projectId") String projectId,
@@ -75,3 +122,4 @@ public class ScrumJTableRESTController {
         return new JTableResult<>();
     }
 }
+

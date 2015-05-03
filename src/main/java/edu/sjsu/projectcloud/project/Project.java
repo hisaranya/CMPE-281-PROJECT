@@ -2,10 +2,8 @@ package edu.sjsu.projectcloud.project;
 
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.task.Task;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

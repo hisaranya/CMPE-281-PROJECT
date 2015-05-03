@@ -9,7 +9,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.version>4.1.6.RELEASE</spring.version>https://github.com/mallikakulkarni/Cmpe281FinalProject.git
     </properties>
 
     <parent>
