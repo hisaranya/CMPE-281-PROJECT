@@ -38,7 +38,7 @@ public class RestController {
 
     @RequestMapping(value = "/getAllStoriesForJTable", method = RequestMethod.POST)
     public JTableResult getAllSprintsForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
-        JTableResult result = new JTableResult();
+        JTableResult<TaskScrum> result = new JTableResult<>();
         result.setResult("OK");
 
         for (int i=0; i < 20; i++) {

@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class JTableResult {
+public class JTableResult<T> {
 
     @JsonProperty("Result")
     private String result = "";
 
     @JsonProperty("Records")
-    private List<Object> records = new ArrayList<>();
+    private List<T> records = new ArrayList<>();
 
     @JsonProperty("TotalRecordCount")
     public int getTotalRecordCount() {
@@ -27,11 +27,11 @@ public class JTableResult {
         this.result = result;
     }
 
-    public List<?> getRecords() {
+    public List<T> getRecords() {
         return records;
     }
 
-    public void addRecord(Object rec) {
+    public void addRecord(T rec) {
         records.add(rec);
     }
 
