@@ -239,4 +239,14 @@ public class AppHandler {
         }
         return projects;
     }
+
+    public Project insertProjectAndAddToResource(String userid, Project project) {
+        try {
+            Project dbProject = projectAccess.insertProject(project);
+            resourceAccess.addProjectToResource(project, userid);
+        } catch (NullMongoTemplateException nmte) {
+            System.out.println("Mongo Connection failed");
+        }
+        return project;
+    }
 }
