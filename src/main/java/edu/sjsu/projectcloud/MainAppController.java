@@ -87,8 +87,8 @@ public class MainAppController {
 
     @RequestMapping(value = "/project/{projectId}/sprint/{sprintId}/stories", method = RequestMethod.GET)
     public String manageStoriesForProjectSprint(Model model,
-                                  @PathVariable("projectId") String projectId,
-                                  @PathVariable("sprintId") String sprintId) {
+                                                @PathVariable("projectId") String projectId,
+                                                @PathVariable("sprintId") String sprintId) {
 
         AppHandler appHandler = new AppHandler();
 
@@ -99,7 +99,7 @@ public class MainAppController {
         return "manageStoriesForProjectSprint";
     }
 
-        private void addAllModelData(Model m, Project p, Sprint s) {
+    private void addAllModelData(Model m, Project p, Sprint s) {
         m.addAttribute("project", p);
         m.addAttribute("sprint", s);
         m.addAttribute("userSessionInfo", userSessionInfo);

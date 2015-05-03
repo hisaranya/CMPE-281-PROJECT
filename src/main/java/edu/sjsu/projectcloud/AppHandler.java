@@ -220,9 +220,9 @@ public class AppHandler {
         return sprints;
     }
 
-    public List<Task> getAllTasks(String projectid) {
-        List<Task> tasks = new ArrayList<>()
-    }
+//    public List<Task> getAllTasks(String projectid) {
+//        List<Task> tasks = new ArrayList<>();
+//    }
 
 
 }
