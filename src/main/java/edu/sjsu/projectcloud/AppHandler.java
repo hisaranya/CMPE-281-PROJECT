@@ -7,6 +7,8 @@ import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
+import edu.sjsu.projectcloud.status.ProjectStatusFactory;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
@@ -251,10 +253,12 @@ public class AppHandler {
     }
 
     public void getProjectStatus(String projectid) throws NullMongoTemplateException {
+        String projecttype = "";
         try {
-            projectAccess.getProjectStatus(projectid);
+            projecttype = projectAccess.getProjecttype(projectid);
         } catch (NullMongoTemplateException nmte) {
             System.out.println("Mongo Connection failed");
         }
+        ProjectStatus projectStatus = ProjectStatusFactory.getProjectStatusObject(projecttype);
     }
 }

@@ -7,6 +7,7 @@ import edu.sjsu.projectcloud.project.ProjectKanban;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
 import edu.sjsu.projectcloud.task.Task;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -170,13 +171,13 @@ public class ProjectAccess {
         return tasks;
     }
 
-    public void getProjectStatus(String projectid) throws  NullMongoTemplateException {
+    public String getProjecttype(String projectid) throws  NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
         Project project = mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
         String projectType = project.getProjecttype();
-
+        return projectType;
     }
 }
