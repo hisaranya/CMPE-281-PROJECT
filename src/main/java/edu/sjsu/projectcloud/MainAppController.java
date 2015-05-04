@@ -1,6 +1,9 @@
 package edu.sjsu.projectcloud;
 
 import edu.sjsu.projectcloud.project.Project;
+import edu.sjsu.projectcloud.project.ProjectKanban;
+import edu.sjsu.projectcloud.project.ProjectScrum;
+import edu.sjsu.projectcloud.project.ProjectWF;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,12 +70,20 @@ public class MainAppController {
 
     @RequestMapping(value = "/project/{PID}", method = RequestMethod.GET)
     public String viewProjectPage(@PathVariable("PID") String PID, Model model) {
-        Project p = new Project();
-        p.setId(PID);
-        model.addAttribute("project", p);
-        model.addAttribute("pagetype", "Display Project Page");
-        model.addAttribute("userSessionInfo", userSessionInfo);
-        return "polymorphicView";
+        AppHandler handler = new AppHandler();
+
+        Project project = handler.getProject(PID);
+        String type = "";
+
+        if (project.getProjecttype().equals("SCRUM")) {
+            type = "/sprints";
+        } else if (project.getProjecttype().equals("KANBAN")) {
+            type = "/cards";
+        } else if (project.getProjecttype().equals("WATERFALL")) {
+            type = "/tasks";
+        }
+
+        return "redirect:/cmpe281project/project/" + PID + type;
     }
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
@@ -123,7 +134,7 @@ public class MainAppController {
         model.addAttribute("project", project);
         model.addAttribute("userSessionInfo", userSessionInfo);
 
-        return "CardJTableRESTController";
+        return "manageCardsforProjectKanban";
     }
 
 }

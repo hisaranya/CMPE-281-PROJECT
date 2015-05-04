@@ -58,7 +58,14 @@ public class HelloApp extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getIndexPage() {
-        return "index";
+        try {
+            User u = appHandler.validateAndGetUser(userSessionInfo.getUsername(), userSessionInfo.getPassword());
+        } catch(InvalidLoginException e) {
+            return "login";
+        } catch(NoSuchUserException e) {
+            return "nosuchuser";
+        }
+        return "redirect:/cmpe281project/projects";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -84,7 +91,7 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         userSessionInfo.setId(resource.getId());
 
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "preferences";
+        return "redirect:/projects";
     }
 
     @RequestMapping(value = "/index/users", method = RequestMethod.POST)
@@ -95,15 +102,15 @@ public class HelloApp extends WebMvcConfigurerAdapter {
             userSessionInfo.setPassword(u.getPassword());
             userSessionInfo.setId(u.getId());
         } catch(InvalidLoginException e) {
-            return "nosuchuser";
-        } catch(NoSuchUserException e) {
             return "login";
+        } catch(NoSuchUserException e) {
+            return "nosuchuser";
         }
 
         Project project = new Project();
         model.addAttribute("project", project);
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "preferences";
+        return "redirect:/cmpe281project/projects";
     }
 
     private void getAllResources(ResourceAccess resourceAccess) {
