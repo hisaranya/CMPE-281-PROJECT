@@ -39,7 +39,7 @@ public class ProjectJTableRESTController {
         AppHandler appHandler = new AppHandler();
         project.setId(null);
         project.setOwnername(userSessionInfo.getUsername());
-        appHandler.insertProjectAndAddToResource(userSessionInfo.getUsername(), project);
+        appHandler.insertProjectAndAddToResource(userSessionInfo.getId(), project);
 
         JTableResult<Project> result = new JTableResult<>();
         result.setResult("OK");
