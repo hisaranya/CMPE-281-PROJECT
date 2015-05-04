@@ -86,13 +86,13 @@ public class SprintAccess {
         return sprint;
     }
 
-    public List<Task> getStories(String sprintid) throws NullMongoTemplateException {
+    public List<TaskScrum> getStories(String sprintid) throws NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
         Sprint sprint = mongoOperations.findOne(query(where("_id").is(sprintid)), Sprint.class);
-        List<Task> stories = sprint.getTasks();
+        List<TaskScrum> stories = sprint.getTasks();
         return stories;
     }
 }

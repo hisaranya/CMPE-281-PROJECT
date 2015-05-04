@@ -1,11 +1,13 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectKanban;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.project.ProjectWF;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.websocket.server.PathParam;
 
@@ -23,13 +26,23 @@ public class MainAppController {
     @Autowired
     UserSessionInfo userSessionInfo;
 
+    AppHandler appHandler = new AppHandler();
+
     @RequestMapping(value = "/project/{PID}/status", method = RequestMethod.GET)
     public String viewProjectStatus(@PathVariable("PID") String PID, Model model) {
+        ProjectStatus projectStatus = null;
         Project p = new Project();
         p.setId(PID);
+        try {
+            p = appHandler.getProject(PID);
+            projectStatus = appHandler.getProjectStatus(PID);
+        } catch (NullMongoTemplateException nmte) {
+            return null;
+        }
         model.addAttribute("pagetype", "Display Project Status Page");
         model.addAttribute("project", p);
         model.addAttribute("userSessionInfo", userSessionInfo);
+        model.addAttribute("projectStatus", projectStatus);
         return "polymorphicView";
     }
 

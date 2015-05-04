@@ -202,8 +202,8 @@ public class AppHandler {
         }
     }
 
-    public List<Task> getAllStoriesForSprint(String projectid, String sprintid) {
-        List<Task> stories = new ArrayList<>();
+    public List<TaskScrum> getAllStoriesForSprint(String projectid, String sprintid) {
+        List<TaskScrum> stories = new ArrayList<>();
         try {
            stories = sprintAccess.getStories(sprintid);
         } catch (NullMongoTemplateException nmte) {

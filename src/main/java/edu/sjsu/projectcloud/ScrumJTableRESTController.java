@@ -26,7 +26,7 @@ public class ScrumJTableRESTController {
         result.setResult("OK");
 
         AppHandler appHandler = new AppHandler();
-        List<Task> stories = appHandler.getAllStoriesForSprint(projectId, sprintId);
+        List<TaskScrum> stories = appHandler.getAllStoriesForSprint(projectId, sprintId);
 
         for (Task t : stories) {
             result.addRecord(t);

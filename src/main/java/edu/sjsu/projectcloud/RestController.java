@@ -1,9 +1,11 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.jtable.JTableResult;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
@@ -40,16 +42,6 @@ public class RestController {
             this.user = user;
             this.pass = pass;
         }
-    }
-
-    @RequestMapping(value = "/ProjectStatus", method = RequestMethod.GET)
-    public List<Sprint> getProjectStatus(@RequestParam(value = "projectId", required = true) String projectId) {
-        // get sprints and return the list of sprints here
-
-        List<Sprint> sprints = new ArrayList<>();
-//        sprints.add(new Sprint("Sprint-1", "8", "5"));
-//        sprints.add(new Sprint("Sprint-2", "5", "3"));
-        return sprints;
     }
 
     @RequestMapping(value = "/getAllSprintsForProject", method = RequestMethod.GET)
@@ -172,8 +164,8 @@ public class RestController {
     }
 
     @RequestMapping(value = "getAllStories/{projectid}/{sprintid}", method = RequestMethod.GET)
-    public List<Task> getAllStories(@PathVariable String projectid, @PathVariable String sprintid, Model model) {
-        List<Task> stories = appHandler.getAllStoriesForSprint(projectid, sprintid);
+    public List<TaskScrum> getAllStories(@PathVariable String projectid, @PathVariable String sprintid, Model model) {
+        List<TaskScrum> stories = appHandler.getAllStoriesForSprint(projectid, sprintid);
         return stories;
     }
 

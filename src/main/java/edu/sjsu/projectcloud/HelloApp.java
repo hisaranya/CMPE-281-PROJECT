@@ -2,6 +2,7 @@ package edu.sjsu.projectcloud;
 
 import edu.sjsu.projectcloud.dataAccess.DAO;
 import edu.sjsu.projectcloud.dataAccess.DAOFactory;
+import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
 import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
@@ -11,6 +12,7 @@ import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,6 +156,8 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         }
     }
 
+
+
     @RequestMapping(value = "/sprint/{username}/{projectid}", method = RequestMethod.POST)
     public String createSprint(@ModelAttribute Sprint sprint, @PathVariable String username, @PathVariable String projectid, Model model) {
         Task taskScrum = new TaskScrum();
@@ -181,6 +185,8 @@ public class HelloApp extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:/js/");
 
     }
+
+
 
     @Bean
     @Primary
