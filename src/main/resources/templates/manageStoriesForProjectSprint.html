@@ -236,8 +236,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                Sprint | <span th:text="${sprint.getSprintName()}" />
+                <small>Project | <span th:text="${project.getProjectname()}"></span></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -252,7 +252,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <input type="hidden" id="userId" th:value="${userSessionInfo.getId()}" />
             <input type="hidden" id="sprintId" th:value="${sprint.getId()}" />
 
-            <h1>Manage stories for project <span th:text="${project.getProjectname()}"></span> and sprint <span th:text="${sprint.getSprintName()}" /></h1>
             <div id="JTableContainer" style="width: 1024px;"></div>
             <script type="text/javascript">
                 var processClick = function(event, data) {

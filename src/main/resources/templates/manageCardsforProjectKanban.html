@@ -236,8 +236,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                Project | <span th:text="${project.getProjectname()}" />
+                <small>Manage Cards for project</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -250,8 +250,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <input type="hidden" id="projectId" th:value="${project.getId()}" />
             <input type="hidden" id="userId" th:value="${userSessionInfo.getId()}" />
-
-            <h1> Manage Cards for project <span th:text="${project.getProjectname()}"></span></h1>
 
             <div id="TaskKanbanJTableContainer" style="..."></div>
             <script type="text/javascript">
