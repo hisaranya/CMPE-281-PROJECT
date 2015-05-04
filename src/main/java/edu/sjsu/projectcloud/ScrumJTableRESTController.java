@@ -71,6 +71,7 @@ public class ScrumJTableRESTController {
         AppHandler appHandler = new AppHandler();
         sprint.setId(null);
         appHandler.insertSprint(sprint, projectId);
+        appHandler.updateProjectAddSprint(projectId, sprint);
 
         JTableResult<Sprint> result = new JTableResult<>();
         result.setResult("OK");

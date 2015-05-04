@@ -21,10 +21,10 @@
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
     var processClick = function(event, data) {
-        $('.jtable-data-row').click(function() {
+        $('.jtable-data-row').off('click').on('click', (function() {
             var row_id = $(this).attr('data-record-key');
             alert('clicked row with id '+row_id);
-        });
+        }));
     }
 
     $(document).ready(function () {
@@ -56,11 +56,15 @@
                 },
                 startdate: {
                     title: 'StartDate',
-                    width: '10%'
+                    width: '10%',
+                    type: 'date',
+                    displayFormat: 'mm/dd/yy'
                 },
                 enddate: {
                     title: 'EndDate',
-                    width: '10%'
+                    width: '10%',
+                    type: 'date',
+                    displayFormat: 'mm/dd/yy'
                 },
                 ownername: {
                     title: 'OwnerName',

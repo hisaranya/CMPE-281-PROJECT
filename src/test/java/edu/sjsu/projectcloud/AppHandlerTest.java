@@ -10,6 +10,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -59,7 +61,7 @@ public class AppHandlerTest {
 
     @Test
     public void testInsertProjectAndAddToResource() throws Exception {
-        Project project = new ProjectWF("KANBAN", "TESTKANBAN1", "05/01/2015", "05/31/2015", "m");
+        Project project = new ProjectWF("KANBAN", "TESTKANBAN1", new Date("05/02/2015"), new Date("05/02/2015"), "m");
         String userid = "5545c11977c8a107cae8903e";
         AppHandler appHandler = new AppHandler();
         appHandler.insertProjectAndAddToResource(userid, project);

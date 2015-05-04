@@ -47,8 +47,8 @@ public class RestController {
         // get sprints and return the list of sprints here
 
         List<Sprint> sprints = new ArrayList<>();
-        sprints.add(new Sprint("Sprint-1", "8", "5"));
-        sprints.add(new Sprint("Sprint-2", "5", "3"));
+//        sprints.add(new Sprint("Sprint-1", "8", "5"));
+//        sprints.add(new Sprint("Sprint-2", "5", "3"));
         return sprints;
     }
 
@@ -57,8 +57,8 @@ public class RestController {
         // get sprints and return the list of sprints here
 
         List<Sprint> sprints = new ArrayList<>();
-        sprints.add(new Sprint("Sprint-1", "05/02/2015", "05/09/2015"));
-        sprints.add(new Sprint("Sprint-2", "05/10/2015", "05/17/2015"));
+//        sprints.add(new Sprint("Sprint-1", "05/02/2015", "05/09/2015"));
+//        sprints.add(new Sprint("Sprint-2", "05/10/2015", "05/17/2015"));
         return sprints;
     }
 
@@ -84,7 +84,7 @@ public class RestController {
     }
 
     private Project setUpDummyProject(String projectid) {
-        ProjectScrum project = new ProjectScrum("DummyProject", "SCRUM", "05/02/2015", "05/31/2015", "Team16");
+        ProjectScrum project = new ProjectScrum("DummyProject", "SCRUM", new Date("05/02/2015"), new Date("05/02/2015"), "Team16");
         project.setId(projectid);
         project.setSprints(setupDummySprints());
         return project;
@@ -92,14 +92,14 @@ public class RestController {
 
     private List<Sprint> setupDummySprints() {
         List<Sprint> sprints = new ArrayList<>();
-        Sprint sprint1 = new Sprint("DummySprint1", "05/02/2015", "05/09/2015");
-        sprint1.setId("1234");
-        Sprint sprint2 = new Sprint("DummySprint2", "05/09/2015", "05/16/2015");
-        sprint2.setId("5678");
-        sprint1 = addStories(sprint1);
-        sprint2 = addStories(sprint2);
-        sprints.add(sprint1);
-        sprints.add(sprint2);
+////        Sprint sprint1 = new Sprint("DummySprint1", "05/02/2015", "05/09/2015");
+//        sprint1.setId("1234");
+//        Sprint sprint2 = new Sprint("DummySprint2", "05/09/2015", "05/16/2015");
+//        sprint2.setId("5678");
+//        sprint1 = addStories(sprint1);
+//        sprint2 = addStories(sprint2);
+//        sprints.add(sprint1);
+//        sprints.add(sprint2);
         return sprints;
     }
 

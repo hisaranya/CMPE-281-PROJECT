@@ -9,6 +9,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -21,7 +23,7 @@ public class ResourceAccessTest {
     @Test
     public void testAddProject() {
         ResourceAccess resourceAccess = new ResourceAccess();
-        Project project = new Project("SCRUM", "P1", "05/01/2015", "05/31/2015", "m");
+        Project project = new Project("SCRUM", "P1", new Date("05/02/2015"),new Date("05/02/2015"), "m");
         try {
             resourceAccess.updateResourceAddProject("m", project);
         } catch (NullMongoTemplateException nmte) {
