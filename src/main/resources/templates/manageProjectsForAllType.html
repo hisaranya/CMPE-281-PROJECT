@@ -20,6 +20,14 @@
 <h1> Manage Different Projects of all Types</h1>
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
+    var baseUrl = '/cmpe281project';
+    var processClick = function(event, data) {
+        $('.jtable-data-row').off('click').on('click', (function() {
+            var row_id = $(this).attr('data-record-key');
+            window.location.href = baseUrl + "/project/" + row_id
+        }));
+    }
+
     $(document).ready(function () {
         //Prepare jTable
         $('#JTableContainer').jtable({
@@ -40,7 +48,12 @@
                 },
                 projectname: {
                     title: 'ProjectName',
-                    width: '10%'
+                    width: '10%',
+                    display: function (data) {
+                        var url = baseUrl + '/project/' + data.record.id + '/status';
+                        var link = '<a href="'+ url + '">' + data.record.projectname + '</a>';
+                        return link;
+                    }
                 },
                 projecttype: {
                     title: 'ProjectType',
@@ -49,11 +62,15 @@
                 },
                 startdate: {
                     title: 'StartDate',
-                    width: '10%'
+                    width: '10%',
+                    type: 'date',
+                    displayFormat: 'mm/dd/yy'
                 },
                 enddate: {
                     title: 'EndDate',
-                    width: '10%'
+                    width: '10%',
+                    type: 'date',
+                    displayFormat: 'mm/dd/yy'
                 },
                 ownername: {
                     title: 'OwnerName',
@@ -63,12 +80,8 @@
                 }
 
             },
-            recordsLoaded: function(event, data) {
-                $('.jtable-data-row').click(function() {
-                    var row_id = $(this).attr('data-record-key');
-                    alert('clicked row with id '+row_id);
-                });
-            }
+            recordsLoaded: processClick,
+            rowInserted: processClick
         });
 
         $('#JTableContainer').jtable('load');

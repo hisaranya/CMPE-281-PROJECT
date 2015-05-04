@@ -1,9 +1,11 @@
 package edu.sjsu.projectcloud;
 
+import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.jtable.JTableResult;
 import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.project.ProjectScrum;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
@@ -42,23 +44,13 @@ public class RestController {
         }
     }
 
-    @RequestMapping(value = "/ProjectStatus", method = RequestMethod.GET)
-    public List<Sprint> getProjectStatus(@RequestParam(value = "projectId", required = true) String projectId) {
-        // get sprints and return the list of sprints here
-
-        List<Sprint> sprints = new ArrayList<>();
-        sprints.add(new Sprint("Sprint-1", "8", "5"));
-        sprints.add(new Sprint("Sprint-2", "5", "3"));
-        return sprints;
-    }
-
     @RequestMapping(value = "/getAllSprintsForProject", method = RequestMethod.GET)
     public List<Sprint> getAllSprintsForProject(@RequestParam(value = "projectId", required = true) String projectId) {
         // get sprints and return the list of sprints here
 
         List<Sprint> sprints = new ArrayList<>();
-        sprints.add(new Sprint("Sprint-1", "05/02/2015", "05/09/2015"));
-        sprints.add(new Sprint("Sprint-2", "05/10/2015", "05/17/2015"));
+//        sprints.add(new Sprint("Sprint-1", "05/02/2015", "05/09/2015"));
+//        sprints.add(new Sprint("Sprint-2", "05/10/2015", "05/17/2015"));
         return sprints;
     }
 
@@ -84,7 +76,7 @@ public class RestController {
     }
 
     private Project setUpDummyProject(String projectid) {
-        ProjectScrum project = new ProjectScrum("DummyProject", "SCRUM", "05/02/2015", "05/31/2015", "Team16");
+        ProjectScrum project = new ProjectScrum("DummyProject", "SCRUM", new Date("05/02/2015"), new Date("05/02/2015"), "Team16");
         project.setId(projectid);
         project.setSprints(setupDummySprints());
         return project;
@@ -92,14 +84,14 @@ public class RestController {
 
     private List<Sprint> setupDummySprints() {
         List<Sprint> sprints = new ArrayList<>();
-        Sprint sprint1 = new Sprint("DummySprint1", "05/02/2015", "05/09/2015");
-        sprint1.setId("1234");
-        Sprint sprint2 = new Sprint("DummySprint2", "05/09/2015", "05/16/2015");
-        sprint2.setId("5678");
-        sprint1 = addStories(sprint1);
-        sprint2 = addStories(sprint2);
-        sprints.add(sprint1);
-        sprints.add(sprint2);
+////        Sprint sprint1 = new Sprint("DummySprint1", "05/02/2015", "05/09/2015");
+//        sprint1.setId("1234");
+//        Sprint sprint2 = new Sprint("DummySprint2", "05/09/2015", "05/16/2015");
+//        sprint2.setId("5678");
+//        sprint1 = addStories(sprint1);
+//        sprint2 = addStories(sprint2);
+//        sprints.add(sprint1);
+//        sprints.add(sprint2);
         return sprints;
     }
 
@@ -172,8 +164,8 @@ public class RestController {
     }
 
     @RequestMapping(value = "getAllStories/{projectid}/{sprintid}", method = RequestMethod.GET)
-    public List<Task> getAllStories(@PathVariable String projectid, @PathVariable String sprintid, Model model) {
-        List<Task> stories = appHandler.getAllStoriesForSprint(projectid, sprintid);
+    public List<TaskScrum> getAllStories(@PathVariable String projectid, @PathVariable String sprintid, Model model) {
+        List<TaskScrum> stories = appHandler.getAllStoriesForSprint(projectid, sprintid);
         return stories;
     }
 

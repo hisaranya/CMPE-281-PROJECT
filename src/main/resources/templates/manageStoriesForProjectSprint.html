@@ -17,9 +17,16 @@
 <input type="hidden" id="userId" th:value="${userSessionInfo.getId()}" />
 <input type="hidden" id="sprintId" th:value="${sprint.getId()}" />
 
-<h1>Manage stories for project <span th:text="${project.getProjectname()}"></span> and sprint <span th:text="${sprint.getId()}" /></h1>
+<h1>Manage stories for project <span th:text="${project.getProjectname()}"></span> and sprint <span th:text="${sprint.getSprintName()}" /></h1>
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
+    var processClick = function(event, data) {
+        $('.jtable-data-row').off('click').on('click', (function() {
+            var row_id = $(this).attr('data-record-key');
+            alert('clicked row with id '+row_id);
+        }));
+    };
+
     $(document).ready(function () {
         //Prepare jTable
         $('#JTableContainer').jtable({
@@ -40,6 +47,7 @@
                 },
                 status: {
                     title: 'Status',
+                    options: {'1': 'Ready', '2': 'Inprogress', '3': 'Completed'},
                     width: '10%'
                 },
                 taskName: {
@@ -64,12 +72,8 @@
                     width: '10%'
                 }
             },
-            recordsLoaded: function(event, data) {
-                $('.jtable-data-row').click(function() {
-                    var row_id = $(this).attr('data-record-key');
-                    alert('clicked row with id '+row_id);
-                });
-            }
+            recordsLoaded: processClick,
+            rowInserted: processClick
         });
 
         $('#JTableContainer').jtable('load');

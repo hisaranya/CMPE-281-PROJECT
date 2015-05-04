@@ -1,8 +1,8 @@
 package edu.sjsu.projectcloud.project;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.task.Task;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,17 +14,20 @@ import java.util.List;
 public class Project {
 
     protected String id;
-
     protected String projectname;
     protected String projecttype;
-    protected String startdate;
-    protected String enddate;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
+    protected Date startdate;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
+    protected Date enddate;
     protected String ownername;
 
     protected List<Resource> resources = new ArrayList<>();
     protected List<Task> tasks = new ArrayList<>();
 
-    public Project(String projectname, String projecttype, String startdate, String enddate, String ownername) {
+    public Project(String projectname, String projecttype, Date startdate, Date enddate, String ownername) {
         this.projectname = projectname;
         this.projecttype = projecttype;
         this.startdate = startdate;
@@ -62,19 +65,19 @@ public class Project {
         this.projecttype = projecttype;
     }
 
-    public String getStartdate() {
+    public Date getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(String startdate) {
+    public void setStartdate(Date startdate) {
         this.startdate = startdate;
     }
 
-    public String getEnddate() {
+    public Date getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(String enddate) {
+    public void setEnddate(Date enddate) {
         this.enddate = enddate;
     }
 

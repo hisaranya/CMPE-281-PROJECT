@@ -2,6 +2,7 @@ package edu.sjsu.projectcloud;
 
 import edu.sjsu.projectcloud.dataAccess.DAO;
 import edu.sjsu.projectcloud.dataAccess.DAOFactory;
+import edu.sjsu.projectcloud.db.NullMongoTemplateException;
 import edu.sjsu.projectcloud.db.ProjectAccess;
 import edu.sjsu.projectcloud.db.ResourceAccess;
 import edu.sjsu.projectcloud.exceptions.InvalidLoginException;
@@ -11,6 +12,7 @@ import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.session.UserSessionInfo;
 import edu.sjsu.projectcloud.sprint.Sprint;
+import edu.sjsu.projectcloud.status.ProjectStatus;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskScrum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,14 @@ public class HelloApp extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getIndexPage() {
-        return "index";
+        try {
+            User u = appHandler.validateAndGetUser(userSessionInfo.getUsername(), userSessionInfo.getPassword());
+        } catch(InvalidLoginException e) {
+            return "login";
+        } catch(NoSuchUserException e) {
+            return "nosuchuser";
+        }
+        return "redirect:/cmpe281project/projects";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -84,7 +93,7 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         userSessionInfo.setId(resource.getId());
 
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "preferences";
+        return "redirect:/projects";
     }
 
     @RequestMapping(value = "/index/users", method = RequestMethod.POST)
@@ -95,15 +104,15 @@ public class HelloApp extends WebMvcConfigurerAdapter {
             userSessionInfo.setPassword(u.getPassword());
             userSessionInfo.setId(u.getId());
         } catch(InvalidLoginException e) {
-            return "nosuchuser";
-        } catch(NoSuchUserException e) {
             return "login";
+        } catch(NoSuchUserException e) {
+            return "nosuchuser";
         }
 
         Project project = new Project();
         model.addAttribute("project", project);
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "preferences";
+        return "redirect:/cmpe281project/projects";
     }
 
     private void getAllResources(ResourceAccess resourceAccess) {
@@ -147,6 +156,8 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         }
     }
 
+
+
     @RequestMapping(value = "/sprint/{username}/{projectid}", method = RequestMethod.POST)
     public String createSprint(@ModelAttribute Sprint sprint, @PathVariable String username, @PathVariable String projectid, Model model) {
         Task taskScrum = new TaskScrum();
@@ -173,7 +184,11 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("classpath:/js/");
 
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("classpath:/static/css/");
     }
+
+
 
     @Bean
     @Primary

@@ -10,6 +10,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -59,9 +61,17 @@ public class AppHandlerTest {
 
     @Test
     public void testInsertProjectAndAddToResource() throws Exception {
-        Project project = new ProjectWF("KANBAN", "TESTKANBAN1", "05/01/2015", "05/31/2015", "m");
+        Project project = new ProjectWF("KANBAN", "TESTKANBAN1", new Date("05/02/2015"), new Date("05/02/2015"), "m");
         String userid = "5545c11977c8a107cae8903e";
         AppHandler appHandler = new AppHandler();
         appHandler.insertProjectAndAddToResource(userid, project);
+    }
+
+    @Test
+    public void testUpdateTaskInProject() throws Exception {
+        TaskKanban taskKanban = new TaskKanban("In progress", "DummyKanbanUpdated", "Dummy Task 2 Kanban Updated", "ABC");
+        taskKanban.setId("5546564777c851169492287d");
+        AppHandler appHandler = new AppHandler();
+        appHandler.updateTaskInProject(taskKanban, "5545d26177c8dd1924c84783");
     }
 }

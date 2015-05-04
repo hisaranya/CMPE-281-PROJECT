@@ -3,6 +3,7 @@ package edu.sjsu.projectcloud.project;
 import edu.sjsu.projectcloud.sprint.Sprint;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 public class ProjectScrum extends Project {
 
     private List<Sprint> sprints = new ArrayList<>();
-    public ProjectScrum(String projecttype, String projectname, String startdate, String enddate, String ownername) {
+    public ProjectScrum(String projecttype, String projectname, Date startdate, Date enddate, String ownername) {
         super(projectname, projecttype, startdate, enddate, ownername);
     }
 
