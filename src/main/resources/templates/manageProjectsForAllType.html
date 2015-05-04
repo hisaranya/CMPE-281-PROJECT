@@ -20,10 +20,11 @@
 <h1> Manage Different Projects of all Types</h1>
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
+    var baseUrl = '/cmpe281project';
     var processClick = function(event, data) {
         $('.jtable-data-row').off('click').on('click', (function() {
             var row_id = $(this).attr('data-record-key');
-            window.location.href = "/cmpe281project/project/" + row_id
+            window.location.href = baseUrl + "/project/" + row_id
         }));
     }
 
@@ -47,7 +48,12 @@
                 },
                 projectname: {
                     title: 'ProjectName',
-                    width: '10%'
+                    width: '10%',
+                    display: function (data) {
+                        var url = baseUrl + '/project/' + data.record.id + '/status';
+                        var link = '<a href="'+ url + '">' + data.record.projectname + '</a>';
+                        return link;
+                    }
                 },
                 projecttype: {
                     title: 'ProjectType',
