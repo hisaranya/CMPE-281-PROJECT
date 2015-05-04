@@ -186,6 +186,9 @@ public class HelloApp extends WebMvcConfigurerAdapter {
 
         registry.addResourceHandler("/css/**")
                 .addResourceLocations("classpath:/static/css/");
+
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
     }
 
 

@@ -148,4 +148,14 @@ public class MainAppController {
         return "manageCardsforProjectKanban";
     }
 
+    @RequestMapping(value = "/signOut", method = RequestMethod.GET)
+    public String viewCardsList(Model model) {
+        if (userSessionInfo != null) {
+            userSessionInfo.setId("");
+            userSessionInfo.setUsername("");
+            userSessionInfo.setPassword("");
+        }
+        return "redirect:/cmpe281project";
+    }
+
 }
