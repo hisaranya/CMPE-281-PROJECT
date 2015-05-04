@@ -27,8 +27,7 @@
             sorting: true,
             actions: {
                 listAction: '/cmpe281project/api/scrum/listSprints?projectId=' + $('#projectId').val(),
-                createAction: '/cmpe281project/api/scrum/createSprint?projectId='  + $('#projectId').val(),
-                updateAction: '/cmpe281project/api/scrum/updateSprint?projectId='  + $('#projectId').val()
+                createAction: '/cmpe281project/api/scrum/createSprint?projectId='  + $('#projectId').val()
             },
             fields: {
                 id: {
@@ -36,30 +35,22 @@
                     key: true,
                     list: true
                 },
-                status: {
-                    title: 'Status',
-                    width: '10%'
-                },
-                SprintName: {
+                sprintName: {
                     title: 'Name',
                     width: '10%',
                     sorting: true
                 },
-                SprintDescription: {
-                    title: 'Description',
-                    width: '10%'
-                },
-                resourceName: {
-                    title: 'Resource Name',
-                    width: '10%'
-                },
                 startDate: {
                     title: 'Start Date',
-                    width: '30%'
+                    width: '30%',
+                    type: 'date',
+                    displayFormat: 'mm-dd-yy'
                 },
                 endDate: {
                     title: 'End Date',
-                    width: '30%'
+                    width: '30%',
+                    type: 'date',
+                    displayFormat: 'mm-dd-yy'
                 }
             },
             recordsLoaded: function(event, data) {

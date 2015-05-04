@@ -4,6 +4,7 @@ import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.task.Task;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class ProjectWF extends Project {
 
-    public ProjectWF(String projecttype, String projectname, String startdate, String enddate, String ownername) {
+    public ProjectWF(String projecttype, String projectname, Date startdate, Date enddate, String ownername) {
         super(projectname, projecttype, startdate, enddate, ownername);
     }
 }
