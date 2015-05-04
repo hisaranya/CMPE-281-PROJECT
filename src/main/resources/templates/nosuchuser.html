@@ -36,7 +36,7 @@
     <h4>The User does not exist. Please check username or register</h4>
 
     <div class="header">Sign In</div>
-    <form action="#" name="myForm" onsubmit="return validateForm()" th:action="@{/cmpe281project/index/users}" method="get">
+    <form action="#" name="myForm" onsubmit="return validateForm()" th:action="@{/cmpe281project/index/users}" method="POST">
         <div class="body bg-gray">
             <div class="form-group">
                 <input type="text" name="username" class="form-control" placeholder="Username"/>

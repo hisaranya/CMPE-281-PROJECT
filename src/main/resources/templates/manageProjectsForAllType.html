@@ -23,7 +23,7 @@
     var processClick = function(event, data) {
         $('.jtable-data-row').off('click').on('click', (function() {
             var row_id = $(this).attr('data-record-key');
-            alert('clicked row with id '+row_id);
+            window.location.href = "/cmpe281project/project/" + row_id
         }));
     }
 
