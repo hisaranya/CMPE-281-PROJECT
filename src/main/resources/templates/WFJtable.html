@@ -19,61 +19,66 @@
 <h1>Manage tasks for project <span th:text="${project.getProjectname()}"></span></h1>
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
+    var processClick = function(event, data) {
+        $('.jtable-data-row').click(function() {
+            var row_id = $(this).attr('data-record-key');
+            alert('clicked row with id '+row_id);
+        });
+    }
+
+
     $(document).ready(function () {
         //Prepare jTable
         $('#JTableContainer').jtable({
-            title: 'Waterfall Tasks',
-            defaultSorting: 'id DESC',
-            sorting: true,
-            actions: {
-                listAction: '/cmpe281project/api/WF/listTasks?projectId=' + $('#projectId').val(),
-                createAction: '/cmpe281project/api/WF/createTask?projectId='  + $('#projectId').val(),
-                updateAction: '/cmpe281project/api/WF/updateTask?projectId='  + $('#projectId').val(),
-                deleteAction: '/cmpe281project/api/WF/deleteTask?projectId=' +  $('#projectId').val()
-            },
-            fields: {
-                id: {
-                    title: 'TaskId',
-                    key: true,
-                    list: true
-                },
-                status: {
-                    title: 'Status',
-                    width: '10%'
-                },
-                taskName: {
-                    title: 'Name',
-                    width: '10%',
-                    sorting: true
-                },
-                taskDescription: {
-                    title: 'Description',
-                    width: '10%'
-                },
-                resourceName: {
-                    title: 'Resource Name',
-                    width: '10%'
-                },
-                startDate: {
-                    title: 'Start Date',
-                    width: '30%',
-                    type: 'date',
-                    displayFormat: 'mm/dd/yy'
-                },
-                endDate: {
-                    title: 'End Date',
-                    width: '30%',
-                    type: 'date',
-                    displayFormat: 'mm/dd/yy'
+                    title: 'Waterfall Tasks',
+                    defaultSorting: 'id DESC',
+                    sorting: true,
+                    actions: {
+                        listAction: '/cmpe281project/api/WF/listTasks?projectId=' + $('#projectId').val(),
+                        createAction: '/cmpe281project/api/WF/createTask?projectId=' + $('#projectId').val(),
+                        updateAction: '/cmpe281project/api/WF/updateTask?projectId=' + $('#projectId').val(),
+                        deleteAction: '/cmpe281project/api/WF/deleteTask?projectId=' + $('#projectId').val()
+                    },
+                    fields: {
+                        id: {
+                            title: 'TaskId',
+                            key: true,
+                            list: true
+                        },
+                        status: {
+                            title: 'Status',
+                            width: '10%'
+                        },
+                        taskName: {
+                            title: 'Name',
+                            width: '10%',
+                            sorting: true
+                        },
+                        taskDescription: {
+                            title: 'Description',
+                            width: '10%'
+                        },
+                        resourceName: {
+                            title: 'Resource Name',
+                            width: '10%'
+                        },
+                        startDate: {
+                            title: 'Start Date',
+                            width: '30%',
+                            type: 'date',
+                            displayFormat: 'mm/dd/yy'
+                        },
+                        endDate: {
+                            title: 'End Date',
+                            width: '30%',
+                            type: 'date',
+                            displayFormat: 'mm/dd/yy'
+                        }
+                    },
+                    recordsLoaded: processClick,
+                    rowInserted: processClick
                 }
-            },
-                recordsLoaded: function(event, data) {
-                    $('.jtable-data-row').click(function() {
-                        var row_id = $(this).attr('data-record-key');
-                        alert('clicked row with id '+row_id);
-                    });
-                }
-            });
+        );
 
         $('#JTableContainer').jtable('load');
     });
