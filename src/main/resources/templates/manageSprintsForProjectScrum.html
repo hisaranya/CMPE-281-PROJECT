@@ -22,7 +22,8 @@
     var processClick = function(event, data) {
         $('.jtable-data-row').off('click').on('click', (function() {
             var row_id = $(this).attr('data-record-key');
-            alert('clicked row with id '+row_id);
+            var projectId = $('#projectId').val();
+            window.location.href = "/cmpe281project/project/" + projectId + '/sprint/' + row_id + '/stories';
         }));
     }
 
