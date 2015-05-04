@@ -101,6 +101,17 @@ public class MainAppController {
 
         Project project = appHandler.getProject(projectId);
         Sprint sprint = new Sprint(sprintId);
+
+        if (project.getProjecttype().equals("SCRUM")) {
+            ProjectScrum ps = (ProjectScrum) project;
+            for (Sprint s : ps.getSprints()) {
+                if (s.getId().equals(sprintId)) {
+                    sprint = s;
+                    break;
+                }
+            }
+        }
+
         addAllModelData(model, project, sprint);
 
         return "manageStoriesForProjectSprint";
