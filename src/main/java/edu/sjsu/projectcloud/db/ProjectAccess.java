@@ -155,7 +155,7 @@ public class ProjectAccess {
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();
         }
-        ProjectScrum project = (ProjectScrum) mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
+        ProjectScrum project = mongoOperations.findOne(query(where("_id").is(projectid)), ProjectScrum.class, "project");
         List<Sprint> sprints = project.getSprints();
         return sprints;
     }
