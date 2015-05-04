@@ -40,14 +40,15 @@ public class MainAppController {
         return "polymorphicView";
     }
 
-    @RequestMapping(value = "/project/{PID}/sprintList", method = RequestMethod.GET)
-    public String viewSprintList(@PathVariable("PID") String PID, Model model) {
-        Project p = new Project();
-        p.setId(PID);
-        model.addAttribute("project", p);
-        model.addAttribute("pagetype", "Display Sprint List Page");
+    @RequestMapping(value = "/project/{PID}/sprints", method = RequestMethod.GET)
+    public String viewSprintList(@PathVariable("PID") String projectId, Model model) {
+
+        AppHandler appHandler = new AppHandler();
+        Project project = appHandler.getProject(projectId);
+        model.addAttribute("project", project);
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "polymorphicView";
+
+        return "manageSprintsForProjectScrum";
     }
 
     @RequestMapping(value = "/project/{PID}/sprint/{SID}", method = RequestMethod.GET)
@@ -114,22 +115,15 @@ public class MainAppController {
         return "WFJtable";
     }
 
-
-
     @RequestMapping(value = "/project/{projectId}/cards", method = RequestMethod.GET)
     public String viewCardsList(Model model, @PathVariable("projectId") String projectId) {
-        model.addAttribute("userSessionInfo", userSessionInfo);
-
 
         AppHandler appHandler = new AppHandler();
-
         Project project = appHandler.getProject(projectId);
         model.addAttribute("project", project);
+        model.addAttribute("userSessionInfo", userSessionInfo);
+
         return "CardJTableRESTController";
     }
-
-
-
-
 
 }

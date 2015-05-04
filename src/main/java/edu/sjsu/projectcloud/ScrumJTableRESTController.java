@@ -35,8 +35,7 @@ public class ScrumJTableRESTController {
     }
 
     @RequestMapping(value = "/listSprints", method = RequestMethod.POST)
-    public JTableResult getAllSprintsForJTable(@RequestParam(value = "projectId", required = true) String projectId
-                                              ) {
+    public JTableResult getAllSprintsForJTable(@RequestParam(value = "projectId", required = true) String projectId) {
         JTableResult<Sprint> result = new JTableResult<>(true);
         result.setResult("OK");
 
@@ -48,8 +47,6 @@ public class ScrumJTableRESTController {
         }
         return result;
     }
-
-
 
     @RequestMapping(value="/createStory", method=RequestMethod.POST)
     public JTableResult<? extends Task> createStory(@ModelAttribute TaskScrum story,
