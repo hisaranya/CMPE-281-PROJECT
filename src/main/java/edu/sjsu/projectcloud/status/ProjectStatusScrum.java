@@ -18,6 +18,9 @@ public class ProjectStatusScrum extends ProjectStatus {
         this.hoursRemaining = hoursRemaining;
     }
 
+    public ProjectStatusScrum() {
+    }
+
     private String calculateCompletionDate() {
         int daysRemaining = (hoursRemaining/8);
         if(hoursRemaining%8 > 0) {

@@ -7,14 +7,15 @@ import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.session.User;
 import edu.sjsu.projectcloud.sprint.Sprint;
-import edu.sjsu.projectcloud.status.ProjectStatus;
-import edu.sjsu.projectcloud.status.ProjectStatusFactory;
+import edu.sjsu.projectcloud.status.*;
 import edu.sjsu.projectcloud.task.Task;
 import edu.sjsu.projectcloud.task.TaskKanban;
 import edu.sjsu.projectcloud.task.TaskScrum;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -137,7 +138,7 @@ public class AppHandler {
     }
 
     public Task addStoryToSprint(TaskScrum story, String projectid, String sprintid) {
-        Task dbTask = taskAccess.insertTask(story);
+        TaskScrum dbTask = (TaskScrum) taskAccess.insertTask(story);
         try {
             Sprint sprint = sprintAccess.updateSprintAddTask(sprintid, dbTask);
             projectAccess.updateProjectUpdateStoryInSprint(projectid, sprint, story);
@@ -252,13 +253,46 @@ public class AppHandler {
         return project;
     }
 
-    public void getProjectStatus(String projectid) throws NullMongoTemplateException {
+    public ProjectStatus getProjectStatus(String projectid) throws NullMongoTemplateException {
         String projecttype = "";
         try {
             projecttype = projectAccess.getProjecttype(projectid);
         } catch (NullMongoTemplateException nmte) {
             System.out.println("Mongo Connection failed");
         }
-        ProjectStatus projectStatus = ProjectStatusFactory.getProjectStatusObject(projecttype);
+        return getProjectStatus(projectid, projecttype);
     }
+
+    private ProjectStatus getProjectStatus(String projectid, String projecttype) {
+        ProjectStatus projectStatus = null;
+        if (projecttype.equals("SCRUM")) {
+            int hoursRemaining = 0;
+            try {
+                hoursRemaining = projectAccess.getHoursRemaining(projectid, projecttype);
+            } catch (NullMongoTemplateException nmte) {
+                System.out.println("Mongo Connection failed");
+            }
+            projectStatus = new ProjectStatusScrum(hoursRemaining);
+
+        } else if (projecttype.equals("WATERFALL")) {
+            int percentageComplete = 0;
+            try {
+                percentageComplete = projectAccess.getPercentageComplete(projectid, projecttype);
+            } catch (NullMongoTemplateException nmte) {
+                System.out.println("Mongo Connection failed");
+            }
+            projectStatus = new ProjectStatusWF(percentageComplete);
+        } else if (projecttype.equals("KANBAN")) {
+            Map<String, Integer> table = new Hashtable<>();
+            try {
+                table = projectAccess.getQueuesOverLimit(projectid, projecttype);
+            } catch (NullMongoTemplateException nmte) {
+                System.out.println("Mongo Connection failed");
+            }
+            projectStatus = new ProjectStatusKanban(table.get("Ready"), table.get("Inprogress"), table.get("Completed"));
+        }
+
+        return projectStatus;
+    }
+
 }

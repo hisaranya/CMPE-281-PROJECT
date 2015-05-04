@@ -9,14 +9,18 @@ import java.util.Date;
  * Created by mallika on 5/3/15.
  */
 public class ProjectStatusWF extends ProjectStatus {
-    private Date completionDate;
+    private int percentageComplete;
 
-    public ProjectStatusWF() {
+    public ProjectStatusWF(int percentageComplete) {
         super();
+        this.percentageComplete = percentageComplete;
     }
 
-    public Date getCompletionDate(ProjectScrum project) {
-        Date today = Calendar.getInstance().getTime();
-        return today;
+    public int getPercentageComplete() {
+        return percentageComplete;
+    }
+
+    public void setPercentageComplete(int percentageComplete) {
+        this.percentageComplete = percentageComplete;
     }
 }

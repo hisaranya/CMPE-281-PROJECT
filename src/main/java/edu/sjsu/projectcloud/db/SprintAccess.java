@@ -6,6 +6,7 @@ import edu.sjsu.projectcloud.project.Project;
 import edu.sjsu.projectcloud.resource.Resource;
 import edu.sjsu.projectcloud.sprint.Sprint;
 import edu.sjsu.projectcloud.task.Task;
+import edu.sjsu.projectcloud.task.TaskScrum;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -49,7 +50,7 @@ public class SprintAccess {
         return mongoOperations;
     }
 
-    public Sprint updateSprintAddTask(String sprintid, Task task) throws NullMongoTemplateException {
+    public Sprint updateSprintAddTask(String sprintid, TaskScrum task) throws NullMongoTemplateException {
         MongoOperations mongoOperations = getMongoOperationInstance();
         if (mongoOperations == null) {
             throw new NullMongoTemplateException();

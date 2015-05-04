@@ -9,15 +9,39 @@ import java.util.Date;
  * Created by mallika on 5/3/15.
  */
 public class ProjectStatusKanban extends ProjectStatus {
-    private Date completionDate;
+    private int ready;
+    private int inprogress;
+    private int complete;
+    private int limit = 10;
 
-    public ProjectStatusKanban() {
+    public ProjectStatusKanban(int ready, int inprogress, int complete) {
         super();
+        this.ready = ready;
+        this.inprogress = inprogress;
+        this.complete = complete;
     }
-    public ProjectStatusKanban() {}
 
-    public Date getCompletionDate(ProjectScrum project) {
-        Date today = Calendar.getInstance().getTime();
-        return today;
+    public int getReady() {
+        return ready;
+    }
+
+    public void setReady(int ready) {
+        this.ready = ready;
+    }
+
+    public int getInprogress() {
+        return inprogress;
+    }
+
+    public void setInprogress(int inprogress) {
+        this.inprogress = inprogress;
+    }
+
+    public int getComplete() {
+        return complete;
+    }
+
+    public void setComplete(int complete) {
+        this.complete = complete;
     }
 }

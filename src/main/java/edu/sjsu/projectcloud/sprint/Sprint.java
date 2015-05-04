@@ -2,6 +2,7 @@ package edu.sjsu.projectcloud.sprint;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.sjsu.projectcloud.task.Task;
+import edu.sjsu.projectcloud.task.TaskScrum;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class Sprint {
 
     @JsonFormat(pattern="yyyy-MM-dd")
     protected Date endDate;
-    protected List<Task> tasks = new ArrayList<>();
+    protected List<TaskScrum> tasks = new ArrayList<>();
 
     public Sprint(String sId) {
         this.id = sId;
@@ -65,15 +66,15 @@ public class Sprint {
         this.endDate = endDate;
     }
 
-    public List<Task> getTasks() {
+    public List<TaskScrum> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TaskScrum> tasks) {
         this.tasks = tasks;
     }
 
-    public void addTask(Task task) {
+    public void addTask(TaskScrum task) {
         tasks.add(task);
     }
 
