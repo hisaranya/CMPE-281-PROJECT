@@ -46,16 +46,6 @@ public class MainAppController {
         return "polymorphicView";
     }
 
-    @RequestMapping(value = "/project/{PID}/taskList", method = RequestMethod.GET)
-    public String viewTaskList(@PathVariable("PID") String PID, Model model) {
-        Project p = new Project();
-        p.setId(PID);
-        model.addAttribute("project", p);
-        model.addAttribute("pagetype", "Display Project Task List Page");
-        model.addAttribute("userSessionInfo", userSessionInfo);
-        return "polymorphicView";
-    }
-
     @RequestMapping(value = "/project/{PID}/sprints", method = RequestMethod.GET)
     public String viewSprintList(@PathVariable("PID") String projectId, Model model) {
 
@@ -126,7 +116,6 @@ public class MainAppController {
         }
 
         addAllModelData(model, project, sprint);
-
         return "manageStoriesForProjectSprint";
     }
 
@@ -140,20 +129,18 @@ public class MainAppController {
 
     @RequestMapping(value = "/project/{projectId}/tasks", method = RequestMethod.GET)
     public String viewTaskslist(Model model, @PathVariable("projectId") String projectId) {
-        model.addAttribute("userSessionInfo", userSessionInfo);
-
-
         AppHandler appHandler = new AppHandler();
 
         Project project = appHandler.getProject(projectId);
+        model.addAttribute("userSessionInfo", userSessionInfo);
         model.addAttribute("project", project);
         return "WFJtable";
     }
 
     @RequestMapping(value = "/project/{projectId}/cards", method = RequestMethod.GET)
     public String viewCardsList(Model model, @PathVariable("projectId") String projectId) {
-
         AppHandler appHandler = new AppHandler();
+
         Project project = appHandler.getProject(projectId);
         model.addAttribute("project", project);
         model.addAttribute("userSessionInfo", userSessionInfo);
