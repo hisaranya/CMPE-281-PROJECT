@@ -51,18 +51,17 @@
                     title: 'Start Date',
                     width: '30%',
                     type: 'date',
-                    displayFormat: 'mm-dd-yy'
+                    displayFormat: 'mm/dd/yy'
                 },
                 endDate: {
                     title: 'End Date',
                     width: '30%',
                     type: 'date',
-                    displayFormat: 'mm-dd-yy'
+                    displayFormat: 'mm/dd/yy'
                 }
             },
             recordsLoaded: processClick,
             rowInserted: processClick
-            }
         });
 
         $('#JTableContainer').jtable('load');
