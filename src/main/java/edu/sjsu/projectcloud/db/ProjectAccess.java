@@ -82,6 +82,11 @@ public class ProjectAccess {
             throw new NullMongoTemplateException();
         }
         Project project = mongoOperations.findOne(query(where("_id").is(projectid)), Project.class);
+
+        if (project.getProjecttype().equals("SCRUM")) {
+            ProjectScrum ps = mongoOperations.findOne(query(where("_id").is(projectid)), ProjectScrum.class, "project");
+            project = ps;
+        }
         return project;
     }
 

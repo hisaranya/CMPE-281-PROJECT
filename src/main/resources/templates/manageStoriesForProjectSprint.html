@@ -17,7 +17,7 @@
 <input type="hidden" id="userId" th:value="${userSessionInfo.getId()}" />
 <input type="hidden" id="sprintId" th:value="${sprint.getId()}" />
 
-<h1>Manage stories for project <span th:text="${project.getProjectname()}"></span> and sprint <span th:text="${sprint.getId()}" /></h1>
+<h1>Manage stories for project <span th:text="${project.getProjectname()}"></span> and sprint <span th:text="${sprint.getSprintName()}" /></h1>
 <div id="JTableContainer" style="width: 1024px;"></div>
 <script type="text/javascript">
     var processClick = function(event, data) {
