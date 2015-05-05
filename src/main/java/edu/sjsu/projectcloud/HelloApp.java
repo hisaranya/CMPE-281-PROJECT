@@ -93,14 +93,13 @@ public class HelloApp extends WebMvcConfigurerAdapter {
         String username = resource.getUsername();
         Project project = new Project();
         model.addAttribute("project", project);
-        model.addAttribute("username", resource.getUsername());
 
         userSessionInfo.setUsername(resource.getUsername());
         userSessionInfo.setPassword(resource.getPassword());
         userSessionInfo.setId(resource.getId());
 
         model.addAttribute("userSessionInfo", userSessionInfo);
-        return "redirect:/projects";
+        return "redirect:/cmpe281project/projects";
     }
 
     @RequestMapping(value = "/index/users", method = RequestMethod.POST)
