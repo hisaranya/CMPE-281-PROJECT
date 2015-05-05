@@ -59,13 +59,20 @@ public class HelloApp extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String getIndexPage() {
+    public String getIndexPage(Model model) {
+        if (userSessionInfo.getUsername().isEmpty() && userSessionInfo.getPassword().isEmpty()) {
+            model.addAttribute("error", false);
+            return "index";
+        }
         try {
+            model.addAttribute("error", true);
             User u = appHandler.validateAndGetUser(userSessionInfo.getUsername(), userSessionInfo.getPassword());
         } catch(InvalidLoginException e) {
-            return "login";
+            model.addAttribute("message", "Please log in to continue!");
+            return "index";
         } catch(NoSuchUserException e) {
-            return "nosuchuser";
+            model.addAttribute("message", "Username or password does not exist!");
+            return "index";
         }
         return "redirect:/cmpe281project/projects";
     }
@@ -104,9 +111,11 @@ public class HelloApp extends WebMvcConfigurerAdapter {
             userSessionInfo.setPassword(u.getPassword());
             userSessionInfo.setId(u.getId());
         } catch(InvalidLoginException e) {
-            return "login";
+            model.addAttribute("error", true);
+            return "index";
         } catch(NoSuchUserException e) {
-            return "nosuchuser";
+            model.addAttribute("error", true);
+            return "index";
         }
 
         Project project = new Project();
