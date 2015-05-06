@@ -230,8 +230,9 @@ public class ProjectAccess {
                 countComplete++;
             }
         }
-        int totalCount = tasks.size();
-        int percentageComplete = (countComplete/totalCount)*100;
+        int totalCount = countComplete + countReady + countInProgress;
+        System.out.println(countComplete + countReady + countInProgress);
+        int percentageComplete = (1/3)*100;
         return percentageComplete;
     }
 

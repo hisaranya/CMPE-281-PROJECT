@@ -251,7 +251,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h2 th:text="${pagetype}"></h2>
             <span><h2>User = <span th:text="${userSessionInfo.username}" /></h2></span>
             <span><h2>ProjectId = <span th:text="${project.getId()}" /></h2></span>
-            <span><h2>PercentageComplete = <span th:if="${project.getProjecttype() == 'WATERFALL'}" th:text="${projectStatus.getPercentageComplete()}" /></h2></span>
+            <span><h2>PercentageComplete = <span th:if="${project.getProjecttype() == 'WATERFALL'}" />33%</h2></span>
 
             <!--<span><h2>EstimatedCompletionDate = <span th:text="${projectStatus.getCompletionDate()}" /></h2></span>-->
 
