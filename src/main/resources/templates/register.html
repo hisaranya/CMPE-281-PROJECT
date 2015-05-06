@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html class="bg-black">
     <head>
-        
         <title>Cmpe281project | Registration Page</title>
         
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -16,46 +15,26 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
         <script>
-        
         function validateForm() {
-
-
-	console.log("in function");
-        	
+           	console.log("in function");
             var x = document.forms["myForm"]["username"].value;
             var y = document.forms["myForm"]["password"].value;
-            
-
-
 
             if (x == null || x == "") {
                 alert("username must be filled out");
                 return false;
             }
-            
-                      
+
             if (y == null || y == "") {
                 alert("Password must be filled out");
                 return false;
             }
-        
-     	      }
-       
-        
-           
-        
-        
-        
-        
-        
+        }
         </script>
-            
-
     </head>
-    <body class="bg-black">
-		
+    <body class="bg-white">
         <div class="form-box" id="login-box">
-            <div class="header">Register New Membership</div>
+            <div class="header bg-blue">Register New Membership</div>
             <form action="#" name="myForm" onsubmit="return validateForm()" th:action="@{/cmpe281project/register/users}" th:object="${resource}" method="post">
                 <div class="body bg-gray">
                     <div class="form-group">
@@ -70,7 +49,7 @@
                 </div>
                 <div class="footer">                    
 
-                    <button type="submit" class="btn bg-olive btn-block">Sign me up</button>
+                    <button type="submit" class="btn bg-blue btn-block">Sign me up</button>
 
                     
                 </div>
