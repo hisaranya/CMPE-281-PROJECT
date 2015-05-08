@@ -12,7 +12,7 @@ public class ProjectStatusKanban extends ProjectStatus {
     private int ready;
     private int inprogress;
     private int complete;
-    private int limit = 10;
+    private int limit = 2;
 
     public ProjectStatusKanban(int ready, int inprogress, int complete) {
         super();
@@ -43,5 +43,19 @@ public class ProjectStatusKanban extends ProjectStatus {
 
     public void setComplete(int complete) {
         this.complete = complete;
+    }
+
+    public String getProjectStatus () {
+        String status = "For limit "+limit+ ", the queue over limit is: ";
+        if (getReady() > limit) {
+            status += "Ready : "+getReady();
+        }
+        if (getInprogress() > limit) {
+            status += ", In Progress : "+getInprogress();
+        }
+        if (getComplete() > limit) {
+            status += ", Complete : "+getComplete();
+        }
+        return status;
     }
 }

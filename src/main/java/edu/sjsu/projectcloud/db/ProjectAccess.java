@@ -247,9 +247,9 @@ public class ProjectAccess {
         int countInProgress = 0;
         int countComplete = 0;
         for (Task task : tasks) {
-            if (task.getStatus().equals("Ready")) {
+            if (task.getStatus().equals("1")) {
                 countReady++;
-            } else if (task.getStatus().equals("Inprogress")) {
+            } else if (task.getStatus().equals("2")) {
                 countInProgress++;
             } else {
                 countComplete++;

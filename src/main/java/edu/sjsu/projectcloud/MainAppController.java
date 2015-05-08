@@ -43,6 +43,8 @@ public class MainAppController {
         model.addAttribute("project", p);
         model.addAttribute("userSessionInfo", userSessionInfo);
         model.addAttribute("projectStatus", projectStatus);
+        return "polymorphicView";
+       /*
         if (p.getProjecttype().equals("WATERFALL")) {
             return "polymorphic1View";
         } else if (p.getProjecttype().equals("KANBAN")) {
@@ -50,6 +52,7 @@ public class MainAppController {
         } else {
             return "polymorphic2View";
         }
+        */
     }
 
     @RequestMapping(value = "/project/{PID}/sprints", method = RequestMethod.GET)

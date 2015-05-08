@@ -273,7 +273,6 @@ public class AppHandler {
                 System.out.println("Mongo Connection failed");
             }
             projectStatus = new ProjectStatusScrum(hoursRemaining);
-
         } else if (projecttype.equals("WATERFALL")) {
             int percentageComplete = 0;
             try {
