@@ -204,7 +204,7 @@ public class ProjectAccess {
             List<TaskScrum> tasks = sprint.getTasks();
             for (TaskScrum task : tasks) {
                 totalHours = totalHours + task.getHoursAllotted();
-                hoursCompleted = hoursCompleted + task.getHoursAllotted();
+                hoursCompleted = hoursCompleted + task.getHoursCompleted();
             }
         }
         int hoursRemaining = totalHours - hoursCompleted;
